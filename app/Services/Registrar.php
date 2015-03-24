@@ -18,6 +18,7 @@ class Registrar implements RegistrarContract {
 			'username' => 'required|max:255',
 			'email' => 'required|email|max:255|unique:users',
 			'password' => 'required|confirmed|min:6',
+            // TODO Add birth
 		]);
 	}
 
@@ -35,6 +36,7 @@ class Registrar implements RegistrarContract {
 			'password' => bcrypt($data['password']),
             'avatar' => $data['avatar'],
             'birth' => $data['birth']
+            // TODO Set role via package
 		]);
 	}
 
