@@ -49,7 +49,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group" id="sandbox-container">
                             <label class="col-md-4 control-label">Birth</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control" name="birth" value="{{ old('birth') }}">
@@ -76,4 +76,19 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('scripts')
+
+
+<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+
+<script>
+    $('#sandbox-container input').datepicker({
+    format: "yyyy-mm-dd",
+    startView: 2,
+    language: "fr"
+    });
+</script>
 @endsection
