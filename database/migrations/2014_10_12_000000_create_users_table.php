@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 60);
             $table->string('avatar');
             $table->date('birth');
-            $table->integer('role')->default(0);
             $table->boolean('active')->default(true);
 			$table->rememberToken();
 			$table->timestamps();
@@ -34,7 +33,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+        Schema::drop('users');
 	}
 
 }
