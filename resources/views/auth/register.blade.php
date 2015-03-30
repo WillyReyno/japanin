@@ -82,7 +82,7 @@
 
 
 <script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('js/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+<script src="{{ asset('/js/locales/bootstrap-datepicker.fr.min.js') }}"></script>
 
 <script>
     $('#sandbox-container input').datepicker({

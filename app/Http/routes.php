@@ -11,7 +11,18 @@
 |
 */
 
+// Fourni un objet aux méthodes du controller plutôt qu'un id
+Route::model('event', 'Event');
+
+
+// Routes
 Route::get('/', 'HomeController@index');
+
+Route::resource('event', 'EventController');
+
+//Route::bind('event', function($value, $route) {
+//   return \App\Models\Event::whereSlug($value)->first();
+//});
 
 //Route::get('home', 'HomeController@index');
 

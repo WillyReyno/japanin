@@ -3,7 +3,10 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
+use Input;
+use Redirect;
 
 class EventController extends Controller {
 
@@ -14,7 +17,8 @@ class EventController extends Controller {
 	 */
 	public function index()
 	{
-		//
+        $events = Event::all();
+		return view('events.index', compact('events'));
 	}
 
 	/**
@@ -24,7 +28,7 @@ class EventController extends Controller {
 	 */
 	public function create()
 	{
-		//
+        return view('events.create');
 	}
 
 	/**
@@ -34,49 +38,52 @@ class EventController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::all();
+        Event::create($input);
+
+        return Redirect::route('events.index')->with('message', 'Évènement ajouté');
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param Event $event
+     * @return Response
+     */
+	public function show(Event $event)
+	{
+        return view('events.show', compact('events'));
+	}
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Event $event
+     * @return Response
+     */
+	public function edit(Event $event)
+	{
+        return view('events.edit', compact('events'));
+	}
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Event $event
+     * @return Response
+     */
+	public function update(Event $event)
 	{
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Event $event
+     * @return Response
+     */
+	public function destroy(Event $event)
 	{
 		//
 	}
