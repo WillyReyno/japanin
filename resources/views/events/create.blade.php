@@ -1,135 +1,127 @@
 @extends('app')
 
 @section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Ajouter un évènement</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Ajouter un évènement</div>
+                    <div class="panel-body">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
-					{!! Form::model(new App\Models\Event, ['route' => ['event.store']]) !!}
+                        {!! Form::model(new App\Models\Event, ['route' => ['event.store'], 'class' => 'form-horizontal']) !!}
                         <div class="form-group">
-                            {!! Form::label('name', 'Nom de lévènement') !!}
-                            {!! Form::text('name') !!}
-                        </div>
-					{!! Form::close() !!}
-
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/event/store') }}">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Nom de l'évènement</label>
-							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Type</label>
-							<div class="col-md-6">
-							<!-- TODO Dynamiser les types -->
-								<select class="form-control" name="type_id">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="form-group">
-                            <label class="col-md-4 control-label">Adresse</label>
+                            {!! Form::label('name', 'Nom de l\'évènement', array('class' => 'col-md-4 control-label')) !!}
                             <div class="col-md-6">
-                            <!-- TODO Ajouter Google Maps -->
-                                <input type="text" class="form-control" name="address" value="{{ old('address') }}">
-                            </div>
-                        </div>
-
-						<div class="form-group hidden">
-                            <div class="col-md-6">
-                            <!-- TODO Ajouter Google Maps -->
-                                <input type="hidden" class="form-control" name="latitude" value="{{ old('latitude') }}">
-                            </div>
-                        </div>
-
-						<div class="form-group hidden">
-                            <div class="col-md-6">
-                            <!-- TODO Ajouter Google Maps -->
-                                <input type="hidden" class="form-control" name="longitude" value="{{ old('longitude') }}">
-                            </div>
-                        </div>
-
-						<div class="form-group" id="sandbox-container">
-                            <label class="col-md-4 control-label">Date de début</label>
-                            <div class="col-md-6">
-                                <input type="date" class="form-control" name="star_date" value="{{ old('star_date') }}">
-                            </div>
-                        </div>
-
-						<div class="form-group" id="sandbox-container">
-                            <label class="col-md-4 control-label">Date de fin</label>
-                            <div class="col-md-6">
-                                <input type="date" class="form-control" name="end_date" value="{{ old('end_date') }}">
+                                {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Description</label>
+                            {!! Form::label('type_id', 'Type', array('class' => 'col-md-4 control-label')) !!}
                             <div class="col-md-6">
-                            <!-- TODO Ajouter WYSIWYG -->
-                                <textarea class="form-control" name="description">{{ old('description') }}</textarea>
+                                {!! Form::select('type_id', [0, 1, 2, 3], Input::old('type_id'), array('class' => 'form-control')) !!}
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            {!! Form::label('address', 'Adresse', array('class' => 'col-md-4 control-label')) !!}
+                            <div class="col-md-6">
+                                <!-- TODO Ajouter Google Maps -->
+                                {!! Form::text('address', Input::old('address'), array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+
                         <div class="form-group hidden">
-                            <label class="col-md-4 control-label">Affiche</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="poster" value="{{ old('poster') }}">
+                                {!! Form::hidden('latitude', '1,2', array('class' => 'form-control')) !!}
                             </div>
                         </div>
+
+                        <div class="form-group hidden">
+                            <div class="col-md-6">
+                                {!! Form::hidden('longitude', '1,3', array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="sandbox-container">
+                            {!! Form::label('start_date', 'Date de début', array('class' => 'col-md-4 control-label')) !!}
+                            <div class="col-md-6">
+                                {!! Form::input('date', 'start_date', Input::old('star_date'), ['class' => 'form-control']) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="sandbox-container">
+                            {!! Form::label('end_date', 'Date de fin', array('class' => 'col-md-4 control-label')) !!}
+                            <div class="col-md-6">
+                                {!! Form::input('date', 'end_date', Input::old('end_date'), ['class' => 'form-control']) !!}
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Évènement privé ?</label>
+                            {!! Form::label('description', 'Description', array('class' => 'col-md-4 control-label')) !!}
                             <div class="col-md-6">
-                                <input type="checkbox" class="form-control" name="private" value="{{ old('private') }}">
+                                {!! Form::textarea('description', Input::old('description'), array('class' => 'form-control')) !!}
                             </div>
                         </div>
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Enregistrer l'évènement
-								</button>
-							</div>
-						</div>
+                        <div class="form-group">
+                            {!! Form::label('poster', 'Affiche', array('class' => 'col-md-4 control-label')) !!}
+                            <div class="col-md-6">
+                                <!-- TODO Upload fichier -->
+                                {!! Form::text('poster', Input::old('poster'), array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
 
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                        <div class="form-group">
+                            {!! Form::label('private', 'Évènement privé ?', array('class' => 'col-md-4 control-label')) !!}
+                            <div class="col-md-6">
+                                {!! Form::checkbox('private', Input::old('private'), null, array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            <div class="col-md-6">
+                                <!-- TODO Trouver un moyen plus propre de placer l'user_id
+                                {!! Form::hidden('user_id', Auth::user()->id, array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+
+
+
+                        <div class="text-center">
+                            {!! Form::submit('Enregistrer l\'évènement',['class'=>'btn btn-primary']) !!}
+                        </div>
+
+
+                        {!! Form::close() !!}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
 
 
-<script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
-<script src="{{ asset('/js/locales/bootstrap-datepicker.fr.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('/js/locales/bootstrap-datepicker.fr.min.js') }}"></script>
 
-<script>
-    $('#sandbox-container input').datepicker({
-    format: "yyyy-mm-dd",
-    language: "fr"
-    });
-</script>
+    <script>
+        $('#sandbox-container input').datepicker({
+            format: "yyyy-mm-dd",
+            language: "fr"
+        });
+    </script>
 @endsection

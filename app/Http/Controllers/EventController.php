@@ -2,13 +2,26 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Input;
 use Redirect;
 
 class EventController extends Controller {
+
+    protected $rules = [
+        'name' => ['required'],
+        'type_id' => ['required'],
+        'address' => ['required'],
+        'latitude' => ['required'],
+        'longitude' => ['required'],
+        'start_date' => ['required'],
+        'end_date' => ['required'],
+        'description' => ['required'],
+        'user_id' => ['required']
+    ];
+
 
 	/**
 	 * Display a listing of the resource.
@@ -31,13 +44,16 @@ class EventController extends Controller {
         return view('events.create');
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return Response
+     */
+	public function store(Request $request)
 	{
+
+        $this->validate($request, $this->rules);
 		$input = Input::all();
         Event::create($input);
 
