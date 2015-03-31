@@ -91,12 +91,10 @@
 
                         <div class="form-group hidden">
                             <div class="col-md-6">
-                                <!-- TODO Trouver un moyen plus propre de placer l'user_id
+                                <!-- TODO Trouver un moyen plus propre de placer l'user_id -->
                                 {!! Form::hidden('user_id', Auth::user()->id, array('class' => 'form-control')) !!}
                             </div>
                         </div>
-
-
 
                         <div class="text-center">
                             {!! Form::submit('Enregistrer l\'évènement',['class'=>'btn btn-primary']) !!}
