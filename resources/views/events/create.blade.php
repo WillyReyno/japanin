@@ -153,7 +153,6 @@
                 var placepicker = $(this).placepicker({
                     map: $map.get(0),
                     placeChanged: function(){
-                        console.log("changé !");
                         $('.latitude').val(this.getLatLng().lat());
                         $('.longitude').val(this.getLatLng().lng());
                     }
