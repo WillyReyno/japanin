@@ -5,10 +5,10 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
+				<div class="panel-heading">Bienvenue</div>
 
 				<div class="panel-body">
-					You are logged in!
+					<p>Japanin, la culture japonaise s'invite près de chez vous !</p>
 				</div>
 			</div>
 		</div>

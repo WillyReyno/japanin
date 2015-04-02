@@ -12,6 +12,9 @@
                          @if ( !$events->count() )
                             Aucun évènement pour le moment.
                         @else
+                        @if(Auth::check())
+                            <a href="{{ url('/event/create') }}">Ajouter un évènement</a>
+                        @endif
                             <ul>
                                 @foreach( $events as $event )
                                     <li><a href="{{ route('event.show', $event->slug) }}">{{ $event->name }}</a></li>

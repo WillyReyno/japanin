@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSlugToEventsTable extends Migration {
+class UpdateLatLongEventsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,7 +14,8 @@ class AddSlugToEventsTable extends Migration {
 	{
 		Schema::table('events', function(Blueprint $table)
 		{
-            $table->string('slug')->unique();
+            $table->decimal('latitude', 10, 7)->change();
+            $table->decimal('longitude', 10, 7)->change();
 		});
 	}
 
@@ -27,7 +28,8 @@ class AddSlugToEventsTable extends Migration {
 	{
 		Schema::table('events', function(Blueprint $table)
 		{
-			//
+            $table->dropColumn('latitude');
+            $table->dropColumn('longitude');
 		});
 	}
 

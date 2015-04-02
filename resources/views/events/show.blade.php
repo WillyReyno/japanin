@@ -5,9 +5,19 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Ajouter un évènement</div>
+                    <div class="panel-heading">{{$event->name}}</div>
                     <div class="panel-body">
-                        <p>Show {{$event->name}}! {{ var_dump($event) }}</p>
+                        <ul>
+                            <li><strong>Nom :</strong> {{$event->name}}</li>
+                            <li><strong>Type :</strong> {{$event->type_id}}</li> <!-- TODO Dynamiser -->
+                            <li><strong>Adresse :</strong> {{$event->address}}</li>
+                            <li><strong>Latitude :</strong> {{$event->latitude}}</li>
+                            <li><strong>Longitude :</strong> {{$event->longitude}}</li>
+                            <li><strong>Date de début :</strong> {{$event->start_date}}</li>
+                            <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
+                            <li><strong>Description :</strong> {{$event->description}}</li>
+                            <li><strong>Affiche :</strong> {{$event->poster}}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
