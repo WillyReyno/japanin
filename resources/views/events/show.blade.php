@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Ajouter un évènement</div>
                     <div class="panel-body">
-                        <p>Show {{$current_event->name}}! {{ var_dump($current_event) }}</p>
+                        <p>Show {{$event->name}}! {{ var_dump($event) }}</p>
                     </div>
                 </div>
             </div>

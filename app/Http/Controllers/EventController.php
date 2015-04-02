@@ -68,8 +68,7 @@ class EventController extends Controller {
      */
 	public function show(Event $event)
 	{
-        $current_event = Event::find($event->id);
-        return view('events.show', compact('current_event'));
+        return view('events.show', compact('event'));
 	}
 
     /**
@@ -80,7 +79,7 @@ class EventController extends Controller {
      */
 	public function edit(Event $event)
 	{
-        return view('events.edit', compact('events'));
+        return view('events.edit', compact('event'));
 	}
 
     /**
