@@ -153,17 +153,11 @@
                 var placepicker = $(this).placepicker({
                     map: $map.get(0),
                     placeChanged: function(){
+                        // [Japanin] Save latitude and longitude on place change
                         $('.latitude').val(this.getLatLng().lat());
                         $('.longitude').val(this.getLatLng().lng());
                     }
                 }).data('placepicker');
-
-
-                // [Japanin] Save latitude and longitude
-//                var lat = placepicker.getLatLng().lat();
-//                var lng = placepicker.getLatLng().lng();
-
-
 
                 // [Japanin] Change button text on click
                 var btn = $('.btn-map');
