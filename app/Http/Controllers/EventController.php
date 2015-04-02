@@ -57,7 +57,7 @@ class EventController extends Controller {
 		$input = Input::all();
         Event::create($input);
 
-        return Redirect::route('events.index')->with('message', 'Évènement ajouté');
+        return Redirect::route('event.index')->with('message', 'Évènement ajouté');
 	}
 
     /**
@@ -68,7 +68,8 @@ class EventController extends Controller {
      */
 	public function show(Event $event)
 	{
-        return view('events.show', compact('events'));
+        $current_event = Event::find($event->id);
+        return view('events.show', compact('current_event'));
 	}
 
     /**

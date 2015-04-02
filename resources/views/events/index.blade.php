@@ -14,7 +14,7 @@
                         @else
                             <ul>
                                 @foreach( $events as $event )
-                                    <li><a href="{{ route('events.show', $event->slug) }}">{{ $event->name }}</a></li>
+                                    <li><a href="{{ route('event.show', $event->slug) }}">{{ $event->name }}</a></li>
                                 @endforeach
                             </ul>
                         @endif

@@ -20,9 +20,9 @@ Route::get('/', 'HomeController@index');
 
 Route::resource('event', 'EventController');
 
-//Route::bind('event', function($value, $route) {
-//   return \App\Models\Event::whereSlug($value)->first();
-//});
+Route::bind('event', function($value, $route) {
+   return \App\Models\Event::whereSlug($value)->first();
+});
 
 //Route::get('home', 'HomeController@index');
 

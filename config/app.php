@@ -138,6 +138,7 @@ return [
         'Barryvdh\Debugbar\ServiceProvider',
         'Bican\Roles\RolesServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
+        'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 
 		/*
 		 * Application Service Providers...
