@@ -15,7 +15,7 @@
                             <li><strong>Longitude :</strong> {{$event->longitude}}</li>
                             <li><strong>Date de début :</strong> {{$event->start_date}}</li>
                             <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
-                            <li><strong>Description :</strong> {{$event->description}}</li>
+                            <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
                             <li><strong>Affiche :</strong> {{$event->poster}}</li>
                         </ul>
                     </div>

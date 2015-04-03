@@ -1,5 +1,8 @@
 @extends('app')
+    <link href="{{ asset('/css/bootstrap3-wysihtml5.css')}}" rel="stylesheet">
+@section('css')
 
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -76,8 +79,8 @@
 
                             <div class="form-group">
                                 {!! Form::label('description', 'Description', array('class' => 'col-md-4 control-label')) !!}
-                                <div class="col-md-6">
-                                    {!! Form::textarea('description', Input::old('description'), array('class' => 'form-control')) !!}
+                                <div class="col-md-8">
+                                    {!! Form::textarea('description', Input::old('description'), array('class' => 'form-control wysiwyg')) !!}
                                 </div>
                             </div>
 
@@ -129,6 +132,8 @@
     <script src="{{ asset('/js/locales/bootstrap-datepicker.fr.min.js') }}"></script>
     <script src="{{ asset('/js/jquery.placepicker.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places"></script>
+    <script src="{{ asset('/js/bootstrap3-wysihtml5.js')}}"></script>
+    <script src="{{ asset('/js/locales/bootstrap-wysihtml5.fr-FR.js')}}"></script>
 
     <script>
         $('#sandbox-container input').datepicker({
@@ -138,6 +143,8 @@
 
 
         $(document).ready(function() {
+
+            $('.wysiwyg').wysihtml5({locale: "fr-FR"});
 
             $(".placepicker").each(function() {
 
@@ -169,7 +176,6 @@
                     } else {
                         $(this).text(show);
                     }
-                    console.log($(this).text());
                 });
 
                 // reload map after collapse in
