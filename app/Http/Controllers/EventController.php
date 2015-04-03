@@ -18,8 +18,7 @@ class EventController extends Controller {
         'longitude' => ['required'],
         'start_date' => ['required'],
         'end_date' => ['required'],
-        'description' => ['required'],
-        'user_id' => ['required']
+        'description' => ['required']
     ];
 
 
@@ -55,6 +54,7 @@ class EventController extends Controller {
 
         $this->validate($request, $this->rules);
 		$input = Input::all();
+        $input['user_id'] = Auth::user()->id;
         Event::create($input);
 
         return Redirect::route('event.index')->with('message', 'Évènement ajouté');
