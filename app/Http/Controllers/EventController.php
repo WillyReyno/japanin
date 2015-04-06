@@ -21,6 +21,13 @@ class EventController extends Controller {
         'description' => ['required']
     ];
 
+    public function __construct()
+    {
+        // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
+        // TODO Rajouter pour l'édition, et éventuellement pour la suppression
+        $this->middleware('auth', ['only' => ['create']]);
+    }
+
 
 	/**
 	 * Display a listing of the resource.

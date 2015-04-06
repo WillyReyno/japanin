@@ -18,15 +18,19 @@ Route::model('event', 'Event');
 // Routes
 Route::get('/', 'HomeController@index');
 
+
 Route::resource('event', 'EventController');
 
 Route::bind('event', function($value, $route) {
-   return \App\Models\Event::whereSlug($value)->first();
+    return \App\Models\Event::whereSlug($value)->first();
 });
 
-//Route::get('home', 'HomeController@index');
+
+Route::group(['prefix' => 'admin'], function() {
+    // Todo Admin Routes
+});
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);
