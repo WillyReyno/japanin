@@ -25,7 +25,7 @@ class EventController extends Controller {
     {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
         // TODO Rajouter pour l'édition, et éventuellement pour la suppression
-        $this->middleware('auth', ['only' => ['create']]);
+        $this->middleware('auth', ['only' => ['create', 'edit']]);
     }
 
 
