@@ -26,6 +26,22 @@ class TypeTableSeeder extends Seeder {
         Type::create([
             'name' => 'Projection',
         ]);
+
+        Type::create([
+            'name' => 'Exposition',
+        ]);
+
+        Type::create([
+            'name' => 'IRL',
+        ]);
+
+        Type::create([
+            'name' => 'Dédicace',
+        ]);
+
+        Type::create([
+            'name' => 'Autre',
+        ]);
     }
 
 }

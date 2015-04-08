@@ -1,5 +1,5 @@
 @extends('app')
-    <link href="{{ asset('/css/bootstrap3-wysihtml5.css')}}" rel="stylesheet">
+<link href="{{ asset('/css/bootstrap3-wysihtml5.css')}}" rel="stylesheet">
 @section('css')
 
 @endsection
@@ -21,9 +21,8 @@
                             </div>
                         @endif
 
-
                         @if(Auth::check())
-                            {!! Form::model(new App\Models\Event, ['route' => ['event.store'], 'class' => 'form-horizontal']) !!}
+                            {!! Form::model(new App\Models\Event, ['files' => true, 'route' => ['event.store'], 'class' => 'form-horizontal']) !!}
                             <div class="form-group">
                                 {!! Form::label('name', 'Nom de l\'évènement', array('class' => 'col-md-4 control-label')) !!}
                                 <div class="col-md-6">
@@ -88,8 +87,7 @@
                             <div class="form-group">
                                 {!! Form::label('poster', 'Affiche', array('class' => 'col-md-4 control-label')) !!}
                                 <div class="col-md-6">
-                                    <!-- TODO Upload fichier -->
-                                    {!! Form::text('poster', Input::old('poster'), array('class' => 'form-control')) !!}
+                                    {!! Form::file('poster', Input::old('poster'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
@@ -112,7 +110,6 @@
                             <p>Vous devez être connecté afin d'ajouter un évènement.<br>
                                 <a href="{{ url('/auth/login') }}">Connexion</a> - <a href="{{ url('/auth/register') }}">Inscription</a></p>
                         @endif
-
 
                     </div>
                 </div>

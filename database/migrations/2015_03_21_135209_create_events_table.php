@@ -16,10 +16,11 @@ class CreateEventsTable extends Migration {
         {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->integer('type_id')->unsigned();
             $table->string('address');
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
             $table->date('start_date');
             $table->date('end_date');
             $table->text('description');
