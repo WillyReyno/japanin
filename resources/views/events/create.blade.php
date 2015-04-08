@@ -21,6 +21,7 @@
                             </div>
                         @endif
 
+
                         @if(Auth::check())
                             {!! Form::model(new App\Models\Event, ['route' => ['event.store'], 'class' => 'form-horizontal']) !!}
                             <div class="form-group">
@@ -33,7 +34,7 @@
                             <div class="form-group">
                                 {!! Form::label('type_id', 'Type', array('class' => 'col-md-4 control-label')) !!}
                                 <div class="col-md-6">
-                                    {!! Form::select('type_id', [0, 1, 2, 3], Input::old('type_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('type_id', $types, Input::old('type_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 

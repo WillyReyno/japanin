@@ -7,7 +7,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">{{$event->name}}</div>
                     <div class="panel-body">
-                        {{dd(Auth::user())}}
                         <ul>
                             <li><strong>Nom :</strong> {{$event->name}}</li>
                             <li><strong>Type :</strong> {{$event->type_id}}</li> <!-- TODO Dynamiser -->

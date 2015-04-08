@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class EventController extends Controller {
 	 */
 	public function create()
 	{
-        return view('events.create');
+        $types = Type::lists('name', 'id');
+        return view('events.create', compact('types'));
 	}
 
     /**
