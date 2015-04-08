@@ -16,7 +16,7 @@
                             <li><strong>Date de début :</strong> {{$event->start_date}}</li>
                             <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
                             <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
-                            <li><strong>Affiche :</strong> {{$event->poster}}</li>
+                            <li><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive"></li>
                         </ul>
                         @if(Auth::check())
                             <!-- Todo créer les fonctionnalités de modif / suppression

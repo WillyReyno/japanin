@@ -24,14 +24,13 @@ class CreateEventsTable extends Migration {
             $table->date('start_date');
             $table->date('end_date');
             $table->text('description');
-            $table->integer('poster_id')->unsigned();
+            $table->string('poster');
             $table->integer('user_id')->unsigned();
             $table->boolean('private')->default(false);
             $table->boolean('active')->default(false);
             $table->timestamps();
 
             $table->foreign('type_id')->references('id')->on('types');
-            $table->foreign('poster_id')->references('id')->on('fileentries');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

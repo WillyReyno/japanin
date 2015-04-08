@@ -15,15 +15,27 @@
 Route::model('event', 'Event');
 
 
-// Routes
+// Index
 Route::get('/', 'HomeController@index');
 
 
+// Evènements
 Route::resource('event', 'EventController');
 
 Route::bind('event', function($value, $route) {
     return \App\Models\Event::whereSlug($value)->first();
 });
+
+// Uploads fichiers
+
+//Route::get('fileentry', 'FileEntryController@index');
+Route::get('fileentry/get/{filename}', [
+    'as' => 'getentry',
+    'uses' => 'FileEntryController@get']);
+//Route::post('fileentry/add', [
+//    'as' => 'addentry',
+//    'uses' => 'FileEntryController@add']);
+
 
 
 Route::group(['prefix' => 'admin'], function() {
