@@ -29,7 +29,6 @@ class RoleTableSeeder extends Seeder {
             'level' => '1',
             'description' => ''
         ]);
-
     }
 
 }
