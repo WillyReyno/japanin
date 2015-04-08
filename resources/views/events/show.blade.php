@@ -18,6 +18,11 @@
                             <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
                             <li><strong>Affiche :</strong> {{$event->poster}}</li>
                         </ul>
+                        @if(Auth::check())
+                            <!-- Todo créer les fonctionnalités de modif / suppression
+                            Todo faire les vérifications selon si l'utilisateur est le créateur ou non (voir middleware) -->
+                            Modifier | Supprimer
+                        @endif
                     </div>
                 </div>
             </div>

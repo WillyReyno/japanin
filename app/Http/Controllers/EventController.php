@@ -12,7 +12,7 @@ use Redirect;
 class EventController extends Controller {
 
     protected $rules = [
-        'name' => ['required'],
+        'name' => ['required', 'unique:events'],
         'type_id' => ['required'],
         'address' => ['required'],
         'latitude' => ['required'],
