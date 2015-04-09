@@ -4,14 +4,15 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Fileentry;
 use App\Models\Type;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Request as Rqst;
-use Input;
-use Redirect;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request as RequestFile;
 
 class EventController extends CommonController {
@@ -65,7 +66,6 @@ class EventController extends CommonController {
      */
 	public function store(Request $request)
 	{
-
         $this->validate($request, $this->rules);
 		$input = Input::all();
         $input['user_id'] = Auth::user()->id;
