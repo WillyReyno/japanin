@@ -9,11 +9,12 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Request as Rqst;
 use Input;
 use Redirect;
 use Illuminate\Support\Facades\Request as RequestFile;
 
-class EventController extends Controller {
+class EventController extends CommonController {
 
     protected $rules = [
         'name' => ['required', 'unique:events'],
@@ -67,19 +68,10 @@ class EventController extends Controller {
 
         $this->validate($request, $this->rules);
 		$input = Input::all();
-
-        // Upload File
-        $file = RequestFile::file('poster');
-        $extension = $file->getClientOriginalExtension();
-        Storage::disk('local')->put($file->getFilename().'.'.$extension, File::get($file));
-        $entry = new Fileentry();
-        $entry->mime = $file->getClientMimeType();
-        $entry->original_filename = $file->getClientOriginalName();
-        $entry->filename = $file->getFilename().'.'.$extension;
-        $entry->save();
-
         $input['user_id'] = Auth::user()->id;
-        $input['poster'] = $file->getFilename().'.'.$extension;
+        if(Rqst::file()) {
+            $input['poster'] = $this->imageUpload('poster', true);
+        }
         Event::create($input);
 
         return Redirect::route('event.index')->with('message', 'Évènement ajouté');
