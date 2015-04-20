@@ -32,6 +32,7 @@ class EventController extends CommonController {
     {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
         $this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
+        //$this->middleware('admin');
     }
 
 

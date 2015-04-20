@@ -21,8 +21,9 @@
                             @endif
                         </ul>
                         @if(Auth::check())
-                            <!-- Todo créer les fonctionnalités de modif
-                            Todo faire les vérifications selon si l'utilisateur est le créateur ou non (voir middleware) -->
+                            <!--
+                            Todo créer les fonctionnalités de modif
+                            Todo vérifier que l'utilisateur est Admin ou Créateur de l'évènement (voir middleware ?) -->
                             {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
 
                             {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
