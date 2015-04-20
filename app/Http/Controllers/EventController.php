@@ -24,7 +24,7 @@ class EventController extends CommonController {
         'latitude' => ['required'],
         'longitude' => ['required'],
         'start_date' => ['required'],
-        'end_date' => ['required'],
+        'end_date' => ['required', 'end_after:start_date'],
         'description' => ['required']
     ];
 
