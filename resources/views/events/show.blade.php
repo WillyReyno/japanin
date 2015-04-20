@@ -21,9 +21,14 @@
                             @endif
                         </ul>
                         @if(Auth::check())
-                            <!-- Todo créer les fonctionnalités de modif / suppression
+                            <!-- Todo créer les fonctionnalités de modif
                             Todo faire les vérifications selon si l'utilisateur est le créateur ou non (voir middleware) -->
-                            Modifier | Supprimer
+                            {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
+
+                            {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
+                            {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
+
+                            {!! Form::close() !!}
                         @endif
                     </div>
                 </div>

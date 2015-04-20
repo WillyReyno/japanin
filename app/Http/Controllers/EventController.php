@@ -118,7 +118,8 @@ class EventController extends CommonController {
      */
 	public function destroy(Event $event)
 	{
-		//
+		$event->delete();
+        return Redirect::route('event.index')->with('message', 'Évènement supprimé');
 	}
 
 }
