@@ -6,6 +6,9 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">Evènements !</div>
+                    @if(Auth::user()->isAdmin())
+                        Vous êtes administrateur !
+                    @endif
 
                     <div class="panel-body">
                         <h2>Évènements</h2>
