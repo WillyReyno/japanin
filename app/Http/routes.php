@@ -32,6 +32,7 @@ Route::bind('event', function($value, $route) {
 Route::get('fileentry/get/{filename}', [
     'as' => 'getentry',
     'uses' => 'FileEntryController@get']);
+
 //Route::post('fileentry/add', [
 //    'as' => 'addentry',
 //    'uses' => 'FileEntryController@add']);

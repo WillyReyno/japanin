@@ -16,12 +16,20 @@
                             <li><strong>Date de début :</strong> {{$event->start_date}}</li>
                             <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
                             <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
-                            <li><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive"></li>
+                            @if($event->poster)
+                                <li><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive"></li>
+                            @endif
                         </ul>
                         @if(Auth::check())
-                            <!-- Todo créer les fonctionnalités de modif / suppression
-                            Todo faire les vérifications selon si l'utilisateur est le créateur ou non (voir middleware) -->
-                            Modifier | Supprimer
+                            <!--
+                            Todo créer les fonctionnalités de modif
+                            Todo vérifier que l'utilisateur est Admin ou Créateur de l'évènement (voir middleware ?) -->
+                            {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
+
+                            {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
+                            {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
+
+                            {!! Form::close() !!}
                         @endif
                     </div>
                 </div>

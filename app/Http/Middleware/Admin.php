@@ -16,7 +16,7 @@ class Admin {
 	{
         $user = Auth::user();
 
-        if(!$user->isAdmin()) {
+        if($user->isAdmin()) {
             return $next($request);
         } else {
             // Todo Customiser la réponse et / ou faire une redirection

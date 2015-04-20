@@ -24,15 +24,15 @@ class EventController extends CommonController {
         'latitude' => ['required'],
         'longitude' => ['required'],
         'start_date' => ['required'],
-        'end_date' => ['required'],
+        'end_date' => ['required', 'end_after:start_date'],
         'description' => ['required']
     ];
 
     public function __construct()
     {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
-        // TODO Rajouter pour l'édition, et éventuellement pour la suppression
-        $this->middleware('auth', ['only' => ['create', 'edit']]);
+        $this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
+        //$this->middleware('admin');
     }
 
 
@@ -118,7 +118,8 @@ class EventController extends CommonController {
      */
 	public function destroy(Event $event)
 	{
-		//
+		$event->delete();
+        return Redirect::route('event.index')->with('message', 'Évènement supprimé');
 	}
 
 }
