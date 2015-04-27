@@ -8,6 +8,7 @@
 <div class="form-group">
     {!! Form::label('type_id', 'Type', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
+        <!-- TODO : Comment faire pour transférer $types ? -->
         {!! Form::select('type_id', $types, Input::old('type_id'), array('class' => 'form-control')) !!}
     </div>
 </div>
@@ -41,7 +42,7 @@
 <div class="form-group" id="sandbox-container">
     {!! Form::label('start_date', 'Date de début', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
-        {!! Form::input('date', 'start_date', Input::old('star_date'), ['class' => 'form-control']) !!}
+        {!! Form::input('date', 'start_date', Input::old('start_date'), ['class' => 'form-control']) !!}
     </div>
 </div>
 

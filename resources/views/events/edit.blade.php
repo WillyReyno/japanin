@@ -22,8 +22,8 @@
                         @endif
 
                         @if(Auth::check())
-                            {!! Form::model(new App\Models\Event, ['files' => true, 'route' => ['event.store'], 'class' => 'form-horizontal']) !!}
-                            @include('events/partials/_form', ['submit_text' => 'Enregistrer l\'évènement'])
+                            {!! Form::model(new App\Models\Event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update'], 'class' => 'form-horizontal']) !!}
+                            @include('events/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @else
                             <p>Vous devez être connecté afin d'ajouter un évènement.<br>

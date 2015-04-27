@@ -96,7 +96,8 @@ class EventController extends CommonController {
      */
 	public function edit(Event $event)
 	{
-        return view('events.edit', compact('event'));
+        $types = Type::lists('name', 'id');
+        return view('events.edit', compact('event', 'types'));
 	}
 
     /**
