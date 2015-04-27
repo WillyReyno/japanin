@@ -27,6 +27,7 @@
                             {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
 
                             {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
+
                             {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
 
                             {!! Form::close() !!}

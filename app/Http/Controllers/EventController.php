@@ -108,7 +108,11 @@ class EventController extends CommonController {
      */
 	public function update(Event $event)
 	{
-		//
+
+		$input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
+        $event->update($input);
+
+        return Redirect::route('event.show', [$event->slug])->with('message', 'Évènement modifié');
 	}
 
     /**

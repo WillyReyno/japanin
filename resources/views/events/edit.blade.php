@@ -22,7 +22,7 @@
                         @endif
 
                         @if(Auth::check())
-                            {!! Form::model(new App\Models\Event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update'], 'class' => 'form-horizontal']) !!}
+                            {!! Form::model($event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update', $event->slug], 'class' => 'form-horizontal']) !!}
                             @include('events/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @else
@@ -52,11 +52,11 @@
             format: "yyyy-mm-dd",
             language: "fr"
         });
-
+        $('.wysiwyg').wysihtml5({locale: "fr-FR"});
 
         $(document).ready(function() {
 
-            $('.wysiwyg').wysihtml5({locale: "fr-FR"});
+
 
             $(".placepicker").each(function() {
 
