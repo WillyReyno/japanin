@@ -20,7 +20,7 @@
                         @else
                             <ul>
                                 @foreach( $events as $event )
-                                    <li><a href="{{ route('event.show', $event->slug) }}">{{ $event->name }}</a></li>
+                                    <li><a href="{{ route('singleEvent', array('id' => $event->id, 'slug' => $event->slug)) }}">{{ $event->name }}</a></li>
                                 @endforeach
                             </ul>
                         @endif

@@ -20,10 +20,10 @@ Route::get('/', 'HomeController@index');
 
 
 // Evènements
-// TODO Check si c'est le meilleur moyen de ne pas perdre ses liens tout en optimisant le SEO avec les slugs.
-Route::get('event/{id}/{slug?}', 'EventController@show');
 
 Route::resource('event', 'EventController');
+// TODO Check si c'est le meilleur moyen de ne pas perdre ses liens tout en optimisant le SEO avec les slugs.
+Route::get('event/{id}/{slug?}', array('as' => 'singleEvent', 'uses' => 'EventController@showById'));
 
 Route::bind('event', function($value, $route) {
     return \App\Models\Event::whereSlug($value)->first();

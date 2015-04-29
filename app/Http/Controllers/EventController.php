@@ -83,16 +83,22 @@ class EventController extends CommonController {
      * @param $id
      * @return Response
      */
-    public function show($id)
+    public function showById($id)
     {
         $event = Event::find($id);
         return view('events.show', compact('event'));
     }
 
-//	public function show(Event $event)
-//	{
-//        return view('events.show', compact('event'));
-//	}
+    /**
+     * Display the specified resource.
+     *
+     * @param Event $event
+     * @return Response
+     */
+	public function show(Event $event)
+	{
+        return view('events.show', compact('event'));
+	}
 
     /**
      * Show the form for editing the specified resource.
