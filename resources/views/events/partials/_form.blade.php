@@ -62,12 +62,24 @@
 </div>
 
 <div class="form-group">
+
     <!-- TODO Display affiche actuelle if edit, et changer le texte du champs -->
     {!! Form::label('poster', 'Affiche', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
         {!! Form::file('poster', Input::old('poster'), array('class' => 'form-control')) !!}
     </div>
 </div>
+
+@if(Request::is('*/edit'))
+    <div class="form-group">
+        <div class="col-md-4 control-label">
+            Ancienne image
+        </div>
+        <div class="col-md-3">
+            <img src="{{route('getentry', $event->poster)}}" class="img-responsive">
+        </div>
+    </div>
+@endif
 
 <div class="form-group">
     {!! Form::label('private', 'Évènement privé ?', array('class' => 'col-md-4 control-label')) !!}

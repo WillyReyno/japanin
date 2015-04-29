@@ -17,14 +17,14 @@
                             <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
                             <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
                             @if($event->poster)
-                                <li><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive"></li>
+                                <li class="col-md-3"><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive img-thumbnail"></li>
                             @endif
                         </ul>
                         @if(Auth::check())
                             <!--
                             Todo créer les fonctionnalités de modif
                             Todo vérifier que l'utilisateur est Admin ou Créateur de l'évènement (voir middleware ?) -->
-                            {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
+                            {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
 
                             {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
 

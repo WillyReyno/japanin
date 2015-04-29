@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Request as RequestFile;
 class EventController extends CommonController {
 
     protected $rules = [
-        'name' => ['required', 'unique:events'],
+        'name' => ['required'],
         'type_id' => ['required'],
         'address' => ['required'],
         'latitude' => ['required'],
@@ -108,8 +108,11 @@ class EventController extends CommonController {
      */
 	public function update(Event $event)
 	{
-
+        // TODO check si ce n'est pas une bêtise de retirer le token ?
 		$input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
+        if(Rqst::file()) {
+            $input['poster'] = $this->imageUpload('poster', true);
+        }
         $event->update($input);
 
         return Redirect::route('event.show', [$event->slug])->with('message', 'Évènement modifié');
