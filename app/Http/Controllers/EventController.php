@@ -36,27 +36,27 @@ class EventController extends CommonController {
     }
 
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
         $events = Event::all();
-		return view('events.index', compact('events'));
-	}
+        return view('events.index', compact('events'));
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
         $types = Type::lists('name', 'id');
         return view('events.create', compact('types'));
-	}
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -64,10 +64,10 @@ class EventController extends CommonController {
      * @param Request $request
      * @return Response
      */
-	public function store(Request $request)
-	{
+    public function store(Request $request)
+    {
         $this->validate($request, $this->rules);
-		$input = Input::all();
+        $input = Input::all();
         $input['user_id'] = Auth::user()->id;
         if(Rqst::file()) {
             $input['poster'] = $this->imageUpload('poster', true);
@@ -75,18 +75,24 @@ class EventController extends CommonController {
         Event::create($input);
 
         return Redirect::route('event.index')->with('message', 'Évènement ajouté');
-	}
+    }
 
     /**
      * Display the specified resource.
      *
-     * @param Event $event
+     * @param $id
      * @return Response
      */
-	public function show(Event $event)
-	{
+    public function show($id)
+    {
+        $event = Event::find($id);
         return view('events.show', compact('event'));
-	}
+    }
+
+//	public function show(Event $event)
+//	{
+//        return view('events.show', compact('event'));
+//	}
 
     /**
      * Show the form for editing the specified resource.
@@ -94,11 +100,11 @@ class EventController extends CommonController {
      * @param Event $event
      * @return Response
      */
-	public function edit(Event $event)
-	{
+    public function edit(Event $event)
+    {
         $types = Type::lists('name', 'id');
         return view('events.edit', compact('event', 'types'));
-	}
+    }
 
     /**
      * Update the specified resource in storage.
@@ -106,17 +112,17 @@ class EventController extends CommonController {
      * @param Event $event
      * @return Response
      */
-	public function update(Event $event)
-	{
+    public function update(Event $event)
+    {
         // TODO check si ce n'est pas une bêtise de retirer le token ?
-		$input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
+        $input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
         if(Rqst::file()) {
             $input['poster'] = $this->imageUpload('poster', true);
         }
         $event->update($input);
 
         return Redirect::route('event.show', [$event->slug])->with('message', 'Évènement modifié');
-	}
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -124,10 +130,10 @@ class EventController extends CommonController {
      * @param Event $event
      * @return Response
      */
-	public function destroy(Event $event)
-	{
-		$event->delete();
+    public function destroy(Event $event)
+    {
+        $event->delete();
         return Redirect::route('event.index')->with('message', 'Évènement supprimé');
-	}
+    }
 
 }
