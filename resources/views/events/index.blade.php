@@ -6,6 +6,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">Evènements !</div>
+
                     @if(Auth::check() && Auth::user()->isAdmin())
                         Vous êtes administrateur !
                     @endif
@@ -20,7 +21,7 @@
                         @else
                             <ul>
                                 @foreach( $events as $event )
-                                    <li><a href="{{ route('singleEvent', array('id' => $event->id, 'slug' => $event->slug)) }}">{{ $event->name }}</a></li>
+                                    <li><a href="{{ route('event.show', $event->slug) }}">{{ $event->name }}</a></li>
                                 @endforeach
                             </ul>
                         @endif

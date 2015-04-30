@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Modifier l'évènement</div>
+                    <div class="panel-heading">Modifier l'Ã©vÃ¨nement</div>
                     <div class="panel-body">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -26,7 +26,7 @@
                             @include('events/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @else
-                            <p>Vous devez être connecté afin d'ajouter un évènement.<br>
+                            <p>Vous devez Ãªtre connectÃ© afin d'ajouter un Ã©vÃ¨nement.<br>
                                 <a href="{{ url('/auth/login') }}">Connexion</a> - <a href="{{ url('/auth/register') }}">Inscription</a></p>
                         @endif
 

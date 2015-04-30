@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Fileentry;
+use App\Models\Oldslug;
 use App\Models\Type;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -80,18 +81,6 @@ class EventController extends CommonController {
     /**
      * Display the specified resource.
      *
-     * @param $id
-     * @return Response
-     */
-    public function showById($id)
-    {
-        $event = Event::find($id);
-        return view('events.show', compact('event'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
      * @param Event $event
      * @return Response
      */
@@ -122,6 +111,17 @@ class EventController extends CommonController {
     {
         // TODO check si ce n'est pas une bêtise de retirer le token ?
         $input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
+
+        /* Saving old slug for 301 redirections */
+        if($input['name'] != $event->name){
+            $oldslug = Oldslug::create([
+                'event_id' => $event->id,
+                'slug' => $event->slug
+            ]);
+            $oldslug->save();
+        }
+
+        /* If a file is sent */
         if(Rqst::file()) {
             $input['poster'] = $this->imageUpload('poster', true);
         }

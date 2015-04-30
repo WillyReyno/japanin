@@ -11,6 +11,9 @@
 |
 */
 
+use App\Models\Oldslug;
+use App\Models\Event;
+
 // Fourni un objet aux méthodes du controller plutôt qu'un id
 Route::model('event', 'Event');
 
@@ -18,15 +21,24 @@ Route::model('event', 'Event');
 // Index
 Route::get('/', 'HomeController@index');
 
-
-// Evènements
-
 Route::resource('event', 'EventController');
-// TODO Check si c'est le meilleur moyen de ne pas perdre ses liens tout en optimisant le SEO avec les slugs.
-Route::get('event/{id}/{slug?}', array('as' => 'singleEvent', 'uses' => 'EventController@showById'));
 
 Route::bind('event', function($value, $route) {
-    return \App\Models\Event::whereSlug($value)->first();
+    // TODO 301 Redirect not working
+    $oldslug = Oldslug::whereSlug($value)->first();
+    if($oldslug) {
+        var_dump("old : ".$oldslug);
+        $eventnew = Event::find($oldslug->event_id);
+        var_dump("new : ".$eventnew);
+        var_dump("slug : ".$eventnew->slug);
+        var_dump(URL::to('event', array($eventnew->slug)));
+
+        if ($eventnew) {
+            return Redirect::to(URL::to('event', array($eventnew->slug)), 301);
+        }
+    } else {
+        return Event::whereSlug($value)->first();
+    }
 });
 
 // Uploads fichiers
