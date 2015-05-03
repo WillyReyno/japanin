@@ -21,25 +21,19 @@ Route::model('event', 'Event');
 // Index
 Route::get('/', 'HomeController@index');
 
-Route::resource('event', 'EventController');
 
-Route::bind('event', function($value, $route) {
-    // TODO 301 Redirect not working
-    $oldslug = Oldslug::whereSlug($value)->first();
-    if($oldslug) {
-        var_dump("old : ".$oldslug);
-        $eventnew = Event::find($oldslug->event_id);
-        var_dump("new : ".$eventnew);
-        var_dump("slug : ".$eventnew->slug);
-        var_dump(URL::to('event', array($eventnew->slug)));
 
-        if ($eventnew) {
-            return Redirect::to(URL::to('event', array($eventnew->slug)), 301);
-        }
+Route::bind('event', function($slug) {
+    $oldSlug = Oldslug::whereSlug($slug)->first();
+    if (is_null($oldSlug)) {
+        return Event::whereSlug($slug)->first();
     } else {
-        return Event::whereSlug($value)->first();
+        return $slug;
     }
 });
+
+Route::resource('event', 'EventController');
+
 
 // Uploads fichiers
 

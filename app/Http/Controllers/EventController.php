@@ -33,6 +33,7 @@ class EventController extends CommonController {
     {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
         $this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
+        $this->middleware('oldslug', ['only' => ['show', 'edit']]);
         //$this->middleware('admin');
     }
 
@@ -84,10 +85,10 @@ class EventController extends CommonController {
      * @param Event $event
      * @return Response
      */
-	public function show(Event $event)
-	{
+    public function show(Event $event)
+    {
         return view('events.show', compact('event'));
-	}
+    }
 
     /**
      * Show the form for editing the specified resource.
