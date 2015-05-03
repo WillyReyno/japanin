@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Modifier l'évènement</div>
+                    <div class="panel-heading">Modifier l'Ã©vÃ¨nement</div>
                     <div class="panel-body">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -22,11 +22,11 @@
                         @endif
 
                         @if(Auth::check())
-                            {!! Form::model(new App\Models\Event, ['files' => true, 'route' => ['event.store'], 'class' => 'form-horizontal']) !!}
-                            @include('events/partials/_form', ['submit_text' => 'Enregistrer l\'évènement'])
+                            {!! Form::model($event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update', $event->slug], 'class' => 'form-horizontal']) !!}
+                            @include('events/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @else
-                            <p>Vous devez être connecté afin d'ajouter un évènement.<br>
+                            <p>Vous devez Ãªtre connectÃ© afin d'ajouter un Ã©vÃ¨nement.<br>
                                 <a href="{{ url('/auth/login') }}">Connexion</a> - <a href="{{ url('/auth/register') }}">Inscription</a></p>
                         @endif
 
@@ -52,11 +52,11 @@
             format: "yyyy-mm-dd",
             language: "fr"
         });
-
+        $('.wysiwyg').wysihtml5({locale: "fr-FR"});
 
         $(document).ready(function() {
 
-            $('.wysiwyg').wysihtml5({locale: "fr-FR"});
+
 
             $(".placepicker").each(function() {
 

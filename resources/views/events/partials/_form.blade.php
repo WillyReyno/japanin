@@ -1,3 +1,4 @@
+
 <div class="form-group">
     {!! Form::label('name', 'Nom de l\'évènement', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
@@ -8,6 +9,7 @@
 <div class="form-group">
     {!! Form::label('type_id', 'Type', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
+        <!-- TODO : Comment faire pour transférer $types ? -->
         {!! Form::select('type_id', $types, Input::old('type_id'), array('class' => 'form-control')) !!}
     </div>
 </div>
@@ -41,7 +43,7 @@
 <div class="form-group" id="sandbox-container">
     {!! Form::label('start_date', 'Date de début', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
-        {!! Form::input('date', 'start_date', Input::old('star_date'), ['class' => 'form-control']) !!}
+        {!! Form::input('date', 'start_date', Input::old('start_date'), ['class' => 'form-control']) !!}
     </div>
 </div>
 
@@ -60,11 +62,24 @@
 </div>
 
 <div class="form-group">
+
+    <!-- TODO Display affiche actuelle if edit, et changer le texte du champs -->
     {!! Form::label('poster', 'Affiche', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
         {!! Form::file('poster', Input::old('poster'), array('class' => 'form-control')) !!}
     </div>
 </div>
+
+@if(Request::is('*/edit'))
+    <div class="form-group">
+        <div class="col-md-4 control-label">
+            Ancienne image
+        </div>
+        <div class="col-md-3">
+            <img src="{{route('getentry', $event->poster)}}" class="img-responsive">
+        </div>
+    </div>
+@endif
 
 <div class="form-group">
     {!! Form::label('private', 'Évènement privé ?', array('class' => 'col-md-4 control-label')) !!}

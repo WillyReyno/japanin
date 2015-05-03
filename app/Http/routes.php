@@ -11,6 +11,9 @@
 |
 */
 
+use App\Models\Oldslug;
+use App\Models\Event;
+
 // Fourni un objet aux méthodes du controller plutôt qu'un id
 Route::model('event', 'Event');
 
@@ -19,12 +22,18 @@ Route::model('event', 'Event');
 Route::get('/', 'HomeController@index');
 
 
-// Evènements
+
+Route::bind('event', function($slug) {
+    $oldSlug = Oldslug::whereSlug($slug)->first();
+    if (is_null($oldSlug)) {
+        return Event::whereSlug($slug)->first();
+    } else {
+        return $slug;
+    }
+});
+
 Route::resource('event', 'EventController');
 
-Route::bind('event', function($value, $route) {
-    return \App\Models\Event::whereSlug($value)->first();
-});
 
 // Uploads fichiers
 

@@ -6,7 +6,7 @@ class Fileentry extends Model {
 
     protected $table = 'fileentries';
 
-    protected $fillable = ['filname', 'mime', 'original_filename'];
+    protected $fillable = ['filename', 'mime', 'original_filename'];
 
     protected $hidden = [];
 
