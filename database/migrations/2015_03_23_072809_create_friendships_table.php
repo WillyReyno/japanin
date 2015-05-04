@@ -20,8 +20,8 @@ class CreateFriendshipsTable extends Migration {
             $table->boolean('status')->default(false);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('friend_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('friend_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unique(array('user_id', 'friend_id'));
         });
