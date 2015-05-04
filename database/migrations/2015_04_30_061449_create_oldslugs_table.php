@@ -19,7 +19,7 @@ class CreateOldslugsTable extends Migration {
 			$table->string('slug')->unique();
 			$table->timestamps();
 
-			$table->foreign('event_id')->references('id')->on('events');
+			$table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 		});
 	}
 
