@@ -28,6 +28,7 @@ class CreateEventsTable extends Migration {
             $table->integer('user_id')->unsigned();
             $table->boolean('private')->default(false);
             $table->boolean('active')->default(false);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('type_id')->references('id')->on('types');

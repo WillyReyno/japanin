@@ -3,11 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Event extends Model implements SluggableInterface {
 
-    use SluggableTrait;
+    use SluggableTrait, SoftDeletes;
 
     protected $table = 'events';
 
@@ -22,4 +23,6 @@ class Event extends Model implements SluggableInterface {
         'save_to' => 'slug',
         'on_update' => 'true'
     );
+
+    protected $dates = ['deleted_at'];
 }

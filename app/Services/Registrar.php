@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\Models\User;
+use Bican\Roles\Models\Role;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 
@@ -18,7 +19,8 @@ class Registrar implements RegistrarContract {
 			'username' => 'required|max:255',
 			'email' => 'required|email|max:255|unique:users',
 			'password' => 'required|confirmed|min:6',
-            'birth' => 'required|date'
+            'birth' => 'required|date',
+			'sex' => 'required'
 		]);
 	}
 
@@ -34,7 +36,8 @@ class Registrar implements RegistrarContract {
 			'username' => $data['username'],
 			'email' => $data['email'],
 			'password' => bcrypt($data['password']),
-            'birth' => $data['birth']
+            'birth' => $data['birth'],
+			'sex' => $data['sex']
 		]);
 
         User::find($new_user['id'])->attachRole(2);

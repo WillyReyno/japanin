@@ -17,11 +17,8 @@ use App\Models\Event;
 // Fourni un objet aux méthodes du controller plutôt qu'un id
 Route::model('event', 'Event');
 
-
 // Index
 Route::get('/', 'HomeController@index');
-
-
 
 Route::bind('event', function($slug) {
     $oldSlug = Oldslug::whereSlug($slug)->first();
@@ -34,7 +31,6 @@ Route::bind('event', function($slug) {
 
 Route::resource('event', 'EventController');
 
-
 // Uploads fichiers
 
 //Route::get('fileentry', 'FileEntryController@index');
@@ -45,8 +41,6 @@ Route::get('fileentry/get/{filename}', [
 //Route::post('fileentry/add', [
 //    'as' => 'addentry',
 //    'uses' => 'FileEntryController@add']);
-
-
 
 Route::group(['prefix' => 'admin'], function() {
     // Todo Admin Routes

@@ -7,9 +7,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Evènements !</div>
 
-                    @if(Auth::check() && Auth::user()->isAdmin())
+                    @role('admin')
                         Vous êtes administrateur !
-                    @endif
+                    @endrole
 
                     <div class="panel-body">
                         <h2>Évènements</h2>

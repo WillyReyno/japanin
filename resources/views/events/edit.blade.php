@@ -21,13 +21,15 @@
                             </div>
                         @endif
 
-                        @if(Auth::check())
+                        @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->allowed('edit.event', $event)))
                             {!! Form::model($event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update', $event->slug], 'class' => 'form-horizontal']) !!}
                             @include('events/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
-                        @else
+                        @elseif(!Auth::check())
                             <p>Vous devez être connecté afin d'ajouter un évènement.<br>
                                 <a href="{{ url('/auth/login') }}">Connexion</a> - <a href="{{ url('/auth/register') }}">Inscription</a></p>
+                        @else
+                            <p>Vous n'avez pas les permissions requises pour accéder à cette page.</p>
                         @endif
 
                     </div>

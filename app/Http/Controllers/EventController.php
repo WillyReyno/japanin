@@ -33,8 +33,8 @@ class EventController extends CommonController {
     {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
         $this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
+        // Middleware permettant d'effectuer les redirections 301
         $this->middleware('oldslug', ['only' => ['show', 'edit']]);
-        //$this->middleware('admin');
     }
 
 
@@ -110,25 +110,29 @@ class EventController extends CommonController {
      */
     public function update(Event $event)
     {
-        // TODO check si ce n'est pas une bêtise de retirer le token ?
-        $input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
+        if(Auth::user()->allowed('edit.event', $event)) {
+            // TODO check si ce n'est pas une bêtise de retirer le token ?
+            $input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
 
-        /* Saving old slug for 301 redirections */
-        if($input['name'] != $event->name){
-            $oldslug = Oldslug::create([
-                'event_id' => $event->id,
-                'slug' => $event->slug
-            ]);
-            $oldslug->save();
+            /* Saving old slug for 301 redirections */
+            if ($input['name'] != $event->name) {
+                $oldslug = Oldslug::create([
+                    'event_id' => $event->id,
+                    'slug' => $event->slug
+                ]);
+                $oldslug->save();
+            }
+
+            /* If a file is sent */
+            if (Rqst::file()) {
+                $input['poster'] = $this->imageUpload('poster', true);
+            }
+            $event->update($input);
+
+            return Redirect::route('event.show', [$event->slug])->with('message', 'Évènement modifié');
+        } else {
+            return Redirect::route('event.index')->with('message', 'Vous n\'avez pas les permissions requises');
         }
-
-        /* If a file is sent */
-        if(Rqst::file()) {
-            $input['poster'] = $this->imageUpload('poster', true);
-        }
-        $event->update($input);
-
-        return Redirect::route('event.show', [$event->slug])->with('message', 'Évènement modifié');
     }
 
     /**
@@ -139,8 +143,14 @@ class EventController extends CommonController {
      */
     public function destroy(Event $event)
     {
-        $event->delete();
-        return Redirect::route('event.index')->with('message', 'Évènement supprimé');
+        // On vérifie, au cas où, si l'utilisateur possède bien les droits de suppression de l'évènement.
+        if(Auth::user()->allowed('delete.event', $event)) {
+            $event->delete();
+            return Redirect::route('event.index')->with('message', 'Évènement supprimé');
+        } else {
+            return Redirect::route('event.index')->with('message', 'Vous n\'avez pas les permissions requises');
+        }
+
     }
 
 }

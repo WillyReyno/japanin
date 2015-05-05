@@ -4,6 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+
                 <div class="panel panel-default">
                     <div class="panel-heading">{{$event->name}}</div>
                     <div class="panel-body">
@@ -20,17 +21,19 @@
                                 <li class="col-md-3"><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive img-thumbnail"></li>
                             @endif
                         </ul>
-                        @if(Auth::check())
-                            <!--
-                            Todo créer les fonctionnalités de modif
-                            Todo vérifier que l'utilisateur est Admin ou Créateur de l'évènement (voir middleware ?) -->
+                        @if(Auth::user()->isAdmin() OR Auth::user()->allowed('edit.event|delete.event', $event))
                             {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
 
+                            @allowed('edit.event', $event)
                             {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
+                            @endallowed
 
+                            @allowed('delete.event', $event)
                             {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
+                            @endallowed
 
                             {!! Form::close() !!}
+
                         @endif
                     </div>
                 </div>
