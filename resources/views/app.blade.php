@@ -43,9 +43,11 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
+
                     <li><a href="{{ url('/auth/login') }}">Connexion</a></li>
                     <li><a href="{{ url('/auth/register') }}">Inscription</a></li>
                 @else
+                    <li><img src="{{Gravatar::get(Auth::user()->email, 'small-secure')}}"></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">

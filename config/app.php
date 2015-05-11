@@ -139,6 +139,7 @@ return [
         'Bican\Roles\RolesServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
+		'Creativeorange\Gravatar\GravatarServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -198,7 +199,9 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 
         'Form'      => 'Illuminate\Html\FormFacade',
-        'HTML'      => 'Illuminate\Html\HtmlFacade'
+        'HTML'      => 'Illuminate\Html\HtmlFacade',
+
+		'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
 
 
 	],

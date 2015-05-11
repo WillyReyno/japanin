@@ -13,9 +13,11 @@
 
 use App\Models\Oldslug;
 use App\Models\Event;
+use App\Models\User;
 
 // Fourni un objet aux méthodes du controller plutôt qu'un id
 Route::model('event', 'Event');
+
 
 // Index
 Route::get('/', 'HomeController@index');
@@ -30,6 +32,8 @@ Route::bind('event', function($slug) {
 });
 
 Route::resource('event', 'EventController');
+
+Route::resource('user', 'UserController');
 
 // Uploads fichiers
 
