@@ -1,12 +1,12 @@
 <?php namespace App\Http\Middleware;
 
-use App\Models\Event;
-use App\Models\Oldslug as Os;
+use App\Models\User;
+use App\Models\UsersOldslug as Uos;
 use Closure;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
-class Oldslug {
+class UsersOldslug {
 
     /**
      * Handle an incoming request.
@@ -18,22 +18,19 @@ class Oldslug {
 
     public function handle($request, Closure $next)
     {
-
-        $routeSlug = $request->route()->event;
-
+        $routeUserSlug = $request->route()->user;
         // On check si ce slug existe dans la liste des anciens slugs
-        $oldSlug = Os::whereSlug($routeSlug)->first();
+        $userOldSlug = Uos::whereSlug($routeUserSlug)->first();
 
         // Si l'ancien slug existe bien
-        if (!is_null($oldSlug)) {
+        if (!is_null($userOldSlug)) {
 
             // On récupère l'évènement valide qui correspond à cet ancien slug
-            $eventnew = Event::find($oldSlug->event_id);
+            $usernew = User::find($userOldSlug->event_id);
 
             // Si l'ancien slug et le nouveau sont bien les même, on redirige vers le nouveau
-            if($routeSlug == $oldSlug->slug) {
-                return redirect('event/'.$eventnew->slug, 301);
-                //return redirect('event/'.$eventnew->slug, 301);
+            if($routeUserSlug == $userOldSlug->slug) {
+                return redirect('user'.$usernew->slug, 301);
             }
         } else {
             return $next($request);

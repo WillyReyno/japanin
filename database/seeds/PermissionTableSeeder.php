@@ -17,20 +17,20 @@ class PermissionTableSeeder extends Seeder {
     {
         DB::table('permissions')->delete();
 
-        $test = Permission::create([
+        $editEvent = Permission::create([
             'name' => 'Edit Event',
             'slug' => 'edit.event',
             'model' => 'App\Models\Event'
         ]);
 
-        $secondtest = Permission::create([
+        $deleteEvent = Permission::create([
             'name' => 'Delete Event',
             'slug' => 'delete.event',
             'model' => 'App\Models\Event'
         ]);
 
-        Role::find(1)->attachPermission($test);
-        Role::find(1)->attachPermission($secondtest);
+        Role::find(1)->attachPermission($editEvent);
+        Role::find(1)->attachPermission($deleteEvent);
     }
 
 }

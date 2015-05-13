@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller {
 
+	public function __construct()
+	{
+		// Middleware permettant d'effectuer les redirections 301
+		$this->middleware('usersoldslug', ['only' => ['show', 'edit']]);
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -45,9 +50,8 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show(User $user)
 	{
-		$user = User::find($id);
 		return view('users.show', compact('user'));
 	}
 
@@ -57,9 +61,9 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit(User $user)
 	{
-		//
+		return view('users.edit', compact('user'));
 	}
 
 	/**

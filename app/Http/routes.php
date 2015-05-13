@@ -12,11 +12,13 @@
 */
 
 use App\Models\Oldslug;
+use App\Models\UsersOldslug;
 use App\Models\Event;
 use App\Models\User;
 
 // Fourni un objet aux méthodes du controller plutôt qu'un id
 Route::model('event', 'Event');
+Route::model('user', 'User');
 
 
 // Index
@@ -31,7 +33,18 @@ Route::bind('event', function($slug) {
     }
 });
 
+Route::bind('user', function($slug) {
+   $userOldSlug = UsersOldslug::whereSlug($slug)->first();
+    if(is_null($userOldSlug)) {
+        return User::whereSlug($slug)->first();
+    } else {
+        return $slug;
+    }
+});
+
 Route::resource('event', 'EventController');
+
+
 
 Route::resource('user', 'UserController');
 

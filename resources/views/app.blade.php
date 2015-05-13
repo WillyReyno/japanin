@@ -39,6 +39,7 @@
         <div class="collapse navbar-collapse" id="japanin-navbar">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/event') }}">Évènements</a></li>
+                <li><a href="{{ url('/user') }}">Membres</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -51,6 +52,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/user', Auth::user()->slug) }}">Profil</a></li>
                             <li><a href="{{ url('/auth/logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>
