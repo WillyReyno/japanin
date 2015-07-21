@@ -145,7 +145,11 @@ class EventController extends CommonController {
     {
         // On vérifie, au cas où, si l'utilisateur possède bien les droits de suppression de l'évènement.
         if(Auth::user()->allowed('delete.event', $event)) {
+
+            $oldslugs = Oldslug::where('event_id', $event->id);
             $event->delete();
+            $oldslugs->delete();
+
             return Redirect::route('event.index')->with('message', 'Évènement supprimé');
         } else {
             return Redirect::route('event.index')->with('message', 'Vous n\'avez pas les permissions requises');

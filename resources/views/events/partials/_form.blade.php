@@ -70,7 +70,7 @@
     </div>
 </div>
 
-@if(Request::is('*/edit'))
+@if(Request::is('*/edit') && $event->poster))
     <div class="form-group">
         <div class="col-md-4 control-label">
             Ancienne image

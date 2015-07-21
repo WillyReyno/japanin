@@ -21,6 +21,11 @@
                                 <li class="col-md-3"><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive img-thumbnail"></li>
                             @endif
                         </ul>
+
+                        @allowed('', $event)
+                            Tu as créé cet évènement !
+                        @endallowed
+
                         @if(Auth::user()->isAdmin() OR Auth::user()->allowed('edit.event|delete.event', $event))
                             {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
 

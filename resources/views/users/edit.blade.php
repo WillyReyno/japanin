@@ -18,15 +18,16 @@
                             </div>
                         @endif
 
+
                         @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id == $user->id))
                             {!! Form::model($user, ['method' => 'PATCH', 'files' => true, 'route' => ['user.update', $user->slug], 'class' => 'form-horizontal']) !!}
                             @include('users/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @elseif(!Auth::check())
-                            <p>Vous devez être connecté afin d'ajouter un évènement.<br>
+                            <p>Vous devez Ãªtre connectÃ© afin d'ajouter un Ã©vÃ¨nement.<br>
                                 <a href="{{ url('/auth/login') }}">Connexion</a> - <a href="{{ url('/auth/register') }}">Inscription</a></p>
                         @else
-                            <p>Vous n'avez pas les permissions requises pour accéder à cette page.</p>
+                            <p>Vous n'avez pas les permissions requises pour accÃ©der Ã  cette page.</p>
                         @endif
 
                     </div>

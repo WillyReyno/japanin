@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\FormDateValidation;
+use App\Services\UsernameUniqueSlug;
 
 class AppServiceProvider extends ServiceProvider {
 

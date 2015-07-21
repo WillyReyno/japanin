@@ -56,7 +56,7 @@
                             </div>
                         </div>
 
-						<div class="form-group" id="sandbox-container">
+						<div class="form-group">
                             <label class="col-md-4 control-label">Sexe</label>
 
                             <div class="col-md-2">

@@ -1,10 +1,14 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\UsersOldslug;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Input;
+use App\Services\Registrar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller {
 
@@ -12,6 +16,7 @@ class UserController extends Controller {
 	{
 		// Middleware permettant d'effectuer les redirections 301
 		$this->middleware('usersoldslug', ['only' => ['show', 'edit']]);
+        $this->middleware('auth', ['only' => ['edit', 'destroy']]);
 	}
 	/**
 	 * Display a listing of the resource.
@@ -72,9 +77,37 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(User $user)
 	{
-		//
+
+        // TODO DEBUG
+        if(Auth::user()->allowed('edit.user', $user)) {
+
+            $input = Input::all();
+
+
+            /* Saving old slug for 301 redirections */
+
+            if ($input['username'] != $user->username) {
+
+                $oldslug = UsersOldslug::create([
+                    'user_id' => $user->id,
+                    'slug' => $user->slug
+                ]);
+
+                $oldslug->save();
+
+            }
+
+            $user->update($input);
+
+            return Redirect::route('user.show', [$user->slug])->with('message', 'Utilisateur modifié');
+
+        } else {
+
+            return Redirect::route('user.index')->with('message', 'Vous n\'avez pas les permissions requises');
+
+        }
 	}
 
 	/**

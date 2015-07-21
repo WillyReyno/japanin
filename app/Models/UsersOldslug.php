@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UsersOldslug extends Model {
 
-    protected $table = 'oldslugs';
+    protected $table = 'users_oldslugs';
 
     protected $fillable = ['user_id', 'slug'];
 

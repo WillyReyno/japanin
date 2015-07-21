@@ -21,7 +21,9 @@ class Event extends Model implements SluggableInterface {
     protected $sluggable = array(
         'build_from' => 'name',
         'save_to' => 'slug',
-        'on_update' => 'true'
+        'on_update' => true,
+        'unique' => true,
+        'include_trashed' => true,
     );
 
     protected $dates = ['deleted_at'];

@@ -13,11 +13,14 @@
                         <img src="{{Gravatar::get($user->email)}}">
                         <ul>
                             <li>Pseudo : {{ $user->username }}</li>
-                            <li>E-mail : {{ $user->email }}</li> <!-- TODO à masquer plus tard -->
+                            <li>E-mail : {{ $user->email }}</li> <!-- TODO Ã  masquer plus tard -->
                             <li>Date de naissance : {{ $user->birth }}</li>
                             <li>Sexe : {{ $user->sex }}</li>
                         </ul>
-                        <!-- TODO afficher les évènements auquels il participe -->
+
+                        <!-- TODO afficher les Ã©vÃ¨nements auquels il participe -->
+
+
 
                         @if(Auth::user()->isAdmin() OR Auth::user()->id == $user->id)
                             {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('user.destroy', $user->slug))) !!}

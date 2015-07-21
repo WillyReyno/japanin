@@ -17,20 +17,33 @@ class PermissionTableSeeder extends Seeder {
     {
         DB::table('permissions')->delete();
 
-        $editEvent = Permission::create([
-            'name' => 'Edit Event',
-            'slug' => 'edit.event',
-            'model' => 'App\Models\Event'
-        ]);
+//        $editEvent = Permission::create([
+//            'name' => 'Edit Event',
+//            'slug' => 'edit.event',
+//            'model' => 'App\Models\Event'
+//        ]);
+//
+//
+//
+//        $deleteEvent = Permission::create([
+//            'name' => 'Delete Event',
+//            'slug' => 'delete.event',
+//            'model' => 'App\Models\Event'
+//        ]);
+//
+//        Role::find(1)->attachPermission($editEvent);
+//        Role::find(1)->attachPermission($deleteEvent);
+//
+//
+//
+//        $editUser = Permission::create([
+//            'name' => 'Edit User',
+//            'slug' => 'edit.user',
+//            'model' => 'App\Models\User'
+//        ]);
+//
+//        Role::find(2)->attachPermission($editUser);
 
-        $deleteEvent = Permission::create([
-            'name' => 'Delete Event',
-            'slug' => 'delete.event',
-            'model' => 'App\Models\Event'
-        ]);
-
-        Role::find(1)->attachPermission($editEvent);
-        Role::find(1)->attachPermission($deleteEvent);
     }
 
 }
