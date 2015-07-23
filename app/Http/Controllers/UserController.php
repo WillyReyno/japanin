@@ -111,7 +111,7 @@ class UserController extends Controller {
             $validator = Validator::make($input, $rules);
 
             if ($validator->fails()) {
-                dd($validator);
+                return Redirect::action('UserController@edit', array($user->getSlug()))->withInput($input)->withErrors($validator->getMessageBag());
             } else {
                 /* Saving old slug for 301 redirections */
                 if ($input['username'] != $user->username) {
@@ -137,11 +137,10 @@ class UserController extends Controller {
 
 
 
-        } else {
-
-            return Redirect::route('user.index')->with('message', 'Vous n\'avez pas les permissions requises');
-
         }
+
+        return Redirect::route('user.index')->with('message', 'Vous n\'avez pas les permissions requises');
+
     }
 
     /**
