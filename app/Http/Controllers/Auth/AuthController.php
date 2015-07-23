@@ -41,7 +41,7 @@ class AuthController extends Controller {
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|max:255',
+            'username' => 'required|max:255', //TODO Unique ou non ? Checker dans les oldslugs ?
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
             'birth' => 'required|date',
