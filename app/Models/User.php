@@ -35,6 +35,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+	protected $guarded = ['id'];
+
 	protected $sluggable = array(
 		'build_from' => 'username',
 		'save_to' => 'slug',

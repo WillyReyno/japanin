@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Input;
-use App\Services\Registrar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Validator;
 
 class UserController extends Controller {
 
@@ -16,8 +16,9 @@ class UserController extends Controller {
 	{
 		// Middleware permettant d'effectuer les redirections 301
 		$this->middleware('usersoldslug', ['only' => ['show', 'edit']]);
-        $this->middleware('auth', ['only' => ['edit', 'destroy']]);
+		$this->middleware('auth', ['only' => ['edit', 'destroy']]);
 	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -79,35 +80,54 @@ class UserController extends Controller {
 	 */
 	public function update(User $user)
 	{
+		// TODO DEBUG
+		if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $user->id)) {
 
-        // TODO DEBUG
-        if(Auth::user()->allowed('edit.user', $user)) {
+			$rules =  [
+				'email' => 'max:255',
+				'password' => 'confirmed|min:6'
+			];
 
-            $input = Input::all();
+			$input = Input::all();
+
+			$v = Validator::make($input, $rules);
+
+			if($v->fails()) {
+
+				return 'fail';
+
+			} else {
+
+				// TODO Tester ça
+
+				/* check if password is empty */
+				if (trim($input['password']) != '') {
+					$user->password = bcrypt($input['password']);
+				}
+
+				/* Saving old slug for 301 redirections */
+				if ($input['username'] != $user->username) {
+
+					$oldslug = UsersOldslug::create([
+						'user_id' => $user->id,
+						'slug' => $user->slug
+					]);
+
+					$oldslug->save();
+
+				}
 
 
-            /* Saving old slug for 301 redirections */
 
-            if ($input['username'] != $user->username) {
+				$user->name = Input::get('name');
+				$user->save();
+				//return Redirect::route('user.show', [$user->slug])->with('message', 'Utilisateur modifié');
+			}
+		} else {
 
-                $oldslug = UsersOldslug::create([
-                    'user_id' => $user->id,
-                    'slug' => $user->slug
-                ]);
+			return Redirect::route('user.index')->with('message', 'Vous n\'avez pas les permissions requises');
 
-                $oldslug->save();
-
-            }
-
-            $user->update($input);
-
-            return Redirect::route('user.show', [$user->slug])->with('message', 'Utilisateur modifié');
-
-        } else {
-
-            return Redirect::route('user.index')->with('message', 'Vous n\'avez pas les permissions requises');
-
-        }
+		}
 	}
 
 	/**

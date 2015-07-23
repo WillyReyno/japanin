@@ -20,18 +20,13 @@
 
                         <!-- TODO afficher les évènements auquels il participe -->
 
+                        @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $user->id))
 
-
-                        @if(Auth::user()->isAdmin() OR Auth::user()->id == $user->id)
                             {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('user.destroy', $user->slug))) !!}
 
-                            @allowed('edit.user', $user)
                             {!! link_to_route('user.edit', 'Modifier', array($user->slug), array('class' => 'btn btn-info')) !!}
-                            @endallowed
 
-                            @allowed('delete.user', $user)
                             {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
-                            @endallowed
 
                             {!! Form::close() !!}
 
