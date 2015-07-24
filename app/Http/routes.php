@@ -44,8 +44,6 @@ Route::bind('user', function($slug) {
 
 Route::resource('event', 'EventController');
 
-
-
 Route::resource('user', 'UserController');
 
 // Uploads fichiers

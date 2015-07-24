@@ -18,17 +18,17 @@ class UserTableSeeder extends Seeder {
         DB::table('users')->delete();
 
         $firstUser = User::create([
-            'username' => 'test1',
-            'email' => 'test1@test.fr',
+            'username' => 'WillyReyno',
+            'email' => 'reyno.willy@gmail.com',
             'password' => bcrypt('drtest12'),
             'birth' => '1993-07-12',
             'sex' => 'man'
         ]);
-        $firstUser->attachRole(2);
+        $firstUser->attachRole(1);
 
         $secondUser = User::create([
-            'username' => 'test2',
-            'email' => 'test2@test.fr',
+            'username' => 'Angy',
+            'email' => 'angy.exicut@gmail.com',
             'password' => bcrypt('drtest12'),
             'birth' => '1993-07-12',
             'sex' => 'man'

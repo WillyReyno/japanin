@@ -147,7 +147,9 @@ class EventController extends CommonController {
         if(Auth::user()->allowed('delete.event', $event)) {
 
             $oldslugs = Oldslug::where('event_id', $event->id);
+
             $event->delete();
+
             $oldslugs->delete();
 
             return Redirect::route('event.index')->with('message', 'Évènement supprimé');

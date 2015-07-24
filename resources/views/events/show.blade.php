@@ -26,7 +26,7 @@
                             Tu as créé cet évènement !
                         @endallowed
 
-                        @if(Auth::user()->isAdmin() OR Auth::user()->allowed('edit.event|delete.event', $event))
+                        @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $event->user_id))
                             {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
 
                             @allowed('edit.event', $event)
