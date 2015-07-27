@@ -17,14 +17,14 @@
                             <li><strong>Date de début :</strong> {{$event->start_date}}</li>
                             <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
                             <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
-                        @if($event->poster)
+                            @if($event->poster)
                                 <li class="col-md-3"><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive img-thumbnail"></li>
                             @endif
                             <li><strong>Ajouté par :</strong> <a href="{{ route('user.show', $author->slug) }}">{{$author->username}}</a></li>
                         </ul>
 
                         @allowed('', $event)
-                            Tu as créé cet évènement !
+                        Tu as créé cet évènement !
                         @endallowed
 
                         @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $event->user_id))
@@ -41,12 +41,21 @@
                             {!! Form::close() !!}
 
                         @endif
-                {!! HTML::linkAction('EventController@userGoing', 'Test', $event) !!}
 
+                        {{-- TODO Ajax here --}}
+                        @if($went)
+                            {!! HTML::linkAction('EventController@userGoing', "Ne plus participer", $event) !!}
+                        @else
+                            {!! HTML::linkAction('EventController@userGoing', "Participer", $event) !!}
+                        @endif
 
-                        @foreach($event->users as $e_users)
-                            {{ $test = App\Models\User::find($e_users->pivot->user_id) }}
-                        @endforeach
+                        <h3>Participants</h3>
+
+                        <ul>
+                            @foreach($event->users as $e_users)
+                                <li>{{ App\Models\User::find($e_users->pivot->user_id)->username }}</li>
+                            @endforeach
+                        </ul>
 
                     </div>
                 </div>

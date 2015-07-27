@@ -89,8 +89,17 @@ class EventController extends CommonController {
      */
     public function show(Event $event)
     {
+        $type = Type::find($event->type_id);
         $author = User::find($event->user_id);
-        return view('events.show', compact('event', 'author'));
+        $went = $this->userWent(Auth::user(), $event);
+
+
+        foreach($event->users as $tests) {
+            //dd($tests);
+            //$users = User::find($users->pivot->user_id);
+        }
+
+        return view('events.show', compact('event', 'type', 'author', 'went', 'tests'));
     }
 
     /**
@@ -163,12 +172,21 @@ class EventController extends CommonController {
     }
 
     /**
-     * Checks if user went to an event ?
+     * Checks if a user is going or went to a specific event
      *
      * @param User $user
      */
-    public function userWent(User $user) {
-        // TODO
+    public function userWent(User $user, Event $event) {
+
+        $went = UserEvent::where('user_id', $user->id)
+            ->where('event_id', $event->id)
+            ->get();
+
+        if(!empty($went[0])){
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -180,20 +198,17 @@ class EventController extends CommonController {
      */
     public function userGoing($event_id)
     {
-        //TODO FINISH THIS
+
         $user = Auth::user();
-        $test = UserEvent::where('user_id', $user->id)->where('event_id', $event_id)->get();
         $event = Event::find($event_id);
-        if(empty($test[0])){
-            echo "empty";
-        } else {
-            echo "full";
-        }
-        dd(true);
-        if(true) {
-            $event->users()->attach($user->id);
-        } else {
+
+        // TODO currently checked twice in process, see if it can be improved
+        $went = $this->userWent($user, $event);
+
+        if($went){
             $event->users()->detach($user->id);
+        } else {
+            $event->users()->attach($user->id);
         }
 
         return Redirect::route('event.show', [$event->slug]);

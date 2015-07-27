@@ -61,7 +61,7 @@ class UserController extends Controller {
 	public function show(User $user)
 	{
 
-		$events_created = Event::where('user_id', $user->id)->lists('name');
+		$events_created = Event::where('user_id', $user->id)->get();
 
 		//TODO Récupérer les events auxquels on a participé
 		//$events_gone = UserEvent::where('user_id', $user->id)->lists('name');

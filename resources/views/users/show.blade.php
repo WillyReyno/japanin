@@ -22,7 +22,7 @@
                         <h3>Évènements ajoutés</h3>
                         <ul>
                             @foreach($events_created as $event_created)
-                                <li>{{$event_created}}</li>
+                                <li><a href="{{ route('event.show', $event_created->slug) }}">{{$event_created->name}}</a></li>
                             @endforeach
                         </ul>
 
