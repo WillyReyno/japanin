@@ -42,16 +42,8 @@ Route::bind('user', function($slug) {
     }
 });
 
-//Route::post('test', 'EventController@userGoing');
-Route::get('test', function() {
 
-    // TODO DEBUG
-    dd('first');
-    if (Request::ajax()) {
-        dd('working :D');
-    }
-
-});
+Route::get('test/{event_id}', 'EventController@userGoing');
 
 Route::resource('event', 'EventController');
 

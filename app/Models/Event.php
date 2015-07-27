@@ -30,7 +30,7 @@ class Event extends Model implements SluggableInterface {
 
     public function users() {
 
-        return $this->belongsToMany('User', 'user_events', 'event_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'user_events', 'event_id', 'user_id')->withTimestamps();
 
     }
 }

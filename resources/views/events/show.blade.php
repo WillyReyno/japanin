@@ -41,9 +41,12 @@
                             {!! Form::close() !!}
 
                         @endif
+                {!! HTML::linkAction('EventController@userGoing', 'Test', $event) !!}
 
-                        {!! Form::submit('Test', array('class' => 'btn test_btn')) !!}
 
+                        @foreach($event->users as $e_users)
+                            {{ $test = App\Models\User::find($e_users->pivot->user_id) }}
+                        @endforeach
 
                     </div>
                 </div>
@@ -62,17 +65,6 @@
         $('#sandbox-container input').datepicker({
             format: "yyyy-mm-dd",
             language: "fr"
-        });
-
-        $('.test_btn').click(function () {
-            //$('#turnedon').addClass('green');
-            $.ajax({
-                method: 'get',      // Should I use post? or get? I am just wanting to run the function when the .click() function is run
-                url: 'http://localhost:8888/japanin/public/test',     // Not sure what should be used for url since I just want to call a function
-                error: function(e){
-                    alert( 'Error ' + e );
-                }
-            });
         });
 
     </script>

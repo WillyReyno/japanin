@@ -6,6 +6,7 @@ use App\Models\Fileentry;
 use App\Models\Oldslug;
 use App\Models\User;
 use App\Models\Type;
+use App\Models\UserEvent;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
@@ -177,13 +178,25 @@ class EventController extends CommonController {
      * @param Event $event
      * @param User $user
      */
-    public function userGoing(Event $event, User $user)
+    public function userGoing($event_id)
     {
+        //TODO FINISH THIS
+        $user = Auth::user();
+        $test = UserEvent::where('user_id', $user->id)->where('event_id', $event_id)->get();
+        $event = Event::find($event_id);
+        if(empty($test[0])){
+            echo "empty";
+        } else {
+            echo "full";
+        }
+        dd(true);
         if(true) {
             $event->users()->attach($user->id);
         } else {
             $event->users()->detach($user->id);
         }
+
+        return Redirect::route('event.show', [$event->slug]);
     }
 
 }

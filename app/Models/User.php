@@ -42,4 +42,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		'save_to' => 'slug',
 		'on_update' => 'true'
 	);
+
+    public function events() {
+
+        return $this->belongsToMany('App\Models\Event', 'user_events', 'user_id', 'event_id')->withTimestamps();
+
+    }
+
 }
