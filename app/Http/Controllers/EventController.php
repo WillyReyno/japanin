@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Fileentry;
 use App\Models\Oldslug;
+use App\Models\User;
 use App\Models\Type;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -87,7 +88,8 @@ class EventController extends CommonController {
      */
     public function show(Event $event)
     {
-        return view('events.show', compact('event'));
+        $author = User::find($event->user_id);
+        return view('events.show', compact('event', 'author'));
     }
 
     /**
@@ -157,6 +159,31 @@ class EventController extends CommonController {
             return Redirect::route('event.index')->with('message', 'Vous n\'avez pas les permissions requises');
         }
 
+    }
+
+    /**
+     * Checks if user went to an event ?
+     *
+     * @param User $user
+     */
+    public function userWent(User $user) {
+        // TODO
+    }
+
+
+    /**
+     * Add/Remove user to the event
+     *
+     * @param Event $event
+     * @param User $user
+     */
+    public function userGoing(Event $event, User $user)
+    {
+        if(true) {
+            $event->users()->attach($user->id);
+        } else {
+            $event->users()->detach($user->id);
+        }
     }
 
 }

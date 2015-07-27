@@ -17,9 +17,10 @@
                             <li><strong>Date de début :</strong> {{$event->start_date}}</li>
                             <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
                             <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
-                            @if($event->poster)
+                        @if($event->poster)
                                 <li class="col-md-3"><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive img-thumbnail"></li>
                             @endif
+                            <li><strong>Ajouté par :</strong> <a href="{{ route('user.show', $author->slug) }}">{{$author->username}}</a></li>
                         </ul>
 
                         @allowed('', $event)
@@ -40,6 +41,10 @@
                             {!! Form::close() !!}
 
                         @endif
+
+                        {!! Form::submit('Test', array('class' => 'btn test_btn')) !!}
+
+
                     </div>
                 </div>
             </div>
@@ -58,5 +63,17 @@
             format: "yyyy-mm-dd",
             language: "fr"
         });
+
+        $('.test_btn').click(function () {
+            //$('#turnedon').addClass('green');
+            $.ajax({
+                method: 'get',      // Should I use post? or get? I am just wanting to run the function when the .click() function is run
+                url: 'http://localhost:8888/japanin/public/test',     // Not sure what should be used for url since I just want to call a function
+                error: function(e){
+                    alert( 'Error ' + e );
+                }
+            });
+        });
+
     </script>
 @endsection

@@ -11,13 +11,27 @@
                     <div class="panel-body">
                         <h2>{{ $user->username }}</h2>
                         <img src="{{Gravatar::get($user->email)}}">
+
+                        <h3>Informations</h3>
                         <ul>
                             <li>Pseudo : {{ $user->username }}</li>
                             <li>E-mail : {{ $user->email }}</li> <!-- TODO à masquer plus tard -->
                             <li>Date de naissance : {{ $user->birth }}</li>
                             <li>Sexe : {{ $user->sex }}</li>
                         </ul>
+                        <h3>Évènements ajoutés</h3>
+                        <ul>
+                            @foreach($events_created as $event_created)
+                                <li>{{$event_created}}</li>
+                            @endforeach
+                        </ul>
 
+                        {{--<h3>A été aux évènements suivants : </h3>
+                        <ul>
+                            @foreach($events_created as $event_created)
+                                <li>{{$event_created}}</li>
+                            @endforeach
+                        </ul>--}}
                         <!-- TODO afficher les évènements auquels il participe -->
 
                         @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $user->id))

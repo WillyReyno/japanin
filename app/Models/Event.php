@@ -27,4 +27,10 @@ class Event extends Model implements SluggableInterface {
     );
 
     protected $dates = ['deleted_at'];
+
+    public function users() {
+
+        return $this->belongsToMany('User', 'user_events', 'event_id', 'user_id');
+
+    }
 }

@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Models\Event;
+use App\Models\UserEvent;
 use App\Models\UsersOldslug;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -58,7 +60,12 @@ class UserController extends Controller {
 	 */
 	public function show(User $user)
 	{
-		return view('users.show', compact('user'));
+
+		$events_created = Event::where('user_id', $user->id)->lists('name');
+
+		//TODO Récupérer les events auxquels on a participé
+		//$events_gone = UserEvent::where('user_id', $user->id)->lists('name');
+		return view('users.show', compact('user', 'events_created', 'events_gone'));
 	}
 
 	/**

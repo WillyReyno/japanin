@@ -42,11 +42,26 @@ Route::bind('user', function($slug) {
     }
 });
 
+//Route::post('test', 'EventController@userGoing');
+Route::get('test', function() {
+
+    // TODO DEBUG
+    dd('first');
+    if (Request::ajax()) {
+        dd('working :D');
+    }
+
+});
+
 Route::resource('event', 'EventController');
 
 Route::resource('user', 'UserController');
 
-// Uploads fichiers
+
+
+/*
+ * Upload de fichiers
+ */
 
 //Route::get('fileentry', 'FileEntryController@index');
 Route::get('fileentry/get/{filename}', [
@@ -56,6 +71,10 @@ Route::get('fileentry/get/{filename}', [
 //Route::post('fileentry/add', [
 //    'as' => 'addentry',
 //    'uses' => 'FileEntryController@add']);
+
+/*
+ * Admin
+ */
 
 Route::group(['prefix' => 'admin'], function() {
     // Todo Admin Routes
