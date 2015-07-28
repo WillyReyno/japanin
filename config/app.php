@@ -142,6 +142,7 @@ return [
         'Illuminate\Html\HtmlServiceProvider',
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 		'Creativeorange\Gravatar\GravatarServiceProvider',
+		'Laravel\Socialite\SocialiteServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -204,6 +205,7 @@ return [
         'HTML'      => 'Illuminate\Html\HtmlFacade',
 
 		'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
+		'Socialize' => 'Laravel\Socialite\Facades\Socialite',
 
 
 	],
