@@ -43,16 +43,24 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Confirmation Mdp</label>
+							<label class="col-md-4 control-label">Confirmation Mot de passe</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password_confirmation">
 							</div>
 						</div>
 
 						<div class="form-group" id="sandbox-container">
-                            <label class="col-md-4 control-label">Birth</label>
+                            <label class="col-md-4 control-label">Date de naissance</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control" name="birth" value="{{ old('birth') }}">
+                            </div>
+                        </div>
+
+						<div class="form-group">
+                            <label class="col-md-4 control-label">Sexe</label>
+
+                            <div class="col-md-2">
+								{!! Form::select('sex', ['woman' => 'Femme', 'man' => 'Homme', 'other' => 'Autre'], Input::old('type_id'), ['class' => 'form-control']) !!}
                             </div>
                         </div>
 

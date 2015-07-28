@@ -115,6 +115,7 @@ return [
 		 */
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
+        'Illuminate\Broadcasting\BroadcastServiceProvider',
 		'Illuminate\Bus\BusServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
@@ -135,10 +136,12 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+
         'Barryvdh\Debugbar\ServiceProvider',
         'Bican\Roles\RolesServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
+		'Creativeorange\Gravatar\GravatarServiceProvider',
 
 		/*
 		 * Application Service Providers...
@@ -198,7 +201,9 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 
         'Form'      => 'Illuminate\Html\FormFacade',
-        'HTML'      => 'Illuminate\Html\HtmlFacade'
+        'HTML'      => 'Illuminate\Html\HtmlFacade',
+
+		'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
 
 
 	],

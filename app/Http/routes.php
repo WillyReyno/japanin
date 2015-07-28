@@ -12,10 +12,13 @@
 */
 
 use App\Models\Oldslug;
+use App\Models\UsersOldslug;
 use App\Models\Event;
+use App\Models\User;
 
 // Fourni un objet aux méthodes du controller plutôt qu'un id
 Route::model('event', 'Event');
+Route::model('user', 'User');
 
 
 // Index
@@ -32,21 +35,42 @@ Route::bind('event', function($slug) {
     }
 });
 
+Route::bind('user', function($slug) {
+   $userOldSlug = UsersOldslug::whereSlug($slug)->first();
+    if(is_null($userOldSlug)) {
+        return User::whereSlug($slug)->first();
+    } else {
+        return $slug;
+    }
+});
+
+// Route qui permet de participer ou de quitter un évènement.
+Route::get('going/{event_id}', 'EventController@userGoing');
+
+
 Route::resource('event', 'EventController');
 
+Route::resource('user', 'UserController');
 
-// Uploads fichiers
+
+
+/*
+ * Upload de fichiers
+ */
 
 //Route::get('fileentry', 'FileEntryController@index');
+
 Route::get('fileentry/get/{filename}', [
     'as' => 'getentry',
     'uses' => 'FileEntryController@get']);
 
-//Route::post('fileentry/add', [
-//    'as' => 'addentry',
-//    'uses' => 'FileEntryController@add']);
+/*Route::post('fileentry/add', [
+    'as' => 'addentry',
+    'uses' => 'FileEntryController@add']);*/
 
-
+/*
+ * Admin
+ */
 
 Route::group(['prefix' => 'admin'], function() {
     // Todo Admin Routes

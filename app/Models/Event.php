@@ -3,11 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Event extends Model implements SluggableInterface {
 
-    use SluggableTrait;
+    use SluggableTrait, SoftDeletes;
 
     protected $table = 'events';
 
@@ -20,6 +21,16 @@ class Event extends Model implements SluggableInterface {
     protected $sluggable = array(
         'build_from' => 'name',
         'save_to' => 'slug',
-        'on_update' => 'true'
+        'on_update' => true,
+        'unique' => true,
+        'include_trashed' => true,
     );
+
+    protected $dates = ['deleted_at'];
+
+    public function users() {
+
+        return $this->belongsToMany('App\Models\User', 'user_events', 'event_id', 'user_id')->withTimestamps();
+
+    }
 }
