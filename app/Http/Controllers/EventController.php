@@ -93,13 +93,7 @@ class EventController extends CommonController {
         $author = User::find($event->user_id);
         $went = $this->userWent(Auth::user(), $event);
 
-
-        foreach($event->users as $tests) {
-            //dd($tests);
-            //$users = User::find($users->pivot->user_id);
-        }
-
-        return view('events.show', compact('event', 'type', 'author', 'went', 'tests'));
+        return view('events.show', compact('event', 'type', 'author', 'went'));
     }
 
     /**
@@ -193,8 +187,8 @@ class EventController extends CommonController {
     /**
      * Add/Remove user to the event
      *
-     * @param Event $event
-     * @param User $user
+     * @param $event_id
+     * @return mixed
      */
     public function userGoing($event_id)
     {

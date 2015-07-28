@@ -24,6 +24,8 @@ Route::model('user', 'User');
 // Index
 Route::get('/', 'HomeController@index');
 
+
+
 Route::bind('event', function($slug) {
     $oldSlug = Oldslug::whereSlug($slug)->first();
     if (is_null($oldSlug)) {
@@ -42,8 +44,9 @@ Route::bind('user', function($slug) {
     }
 });
 
+// Route qui permet de participer ou de quitter un évènement.
+Route::get('going/{event_id}', 'EventController@userGoing');
 
-Route::get('test/{event_id}', 'EventController@userGoing');
 
 Route::resource('event', 'EventController');
 
@@ -56,13 +59,14 @@ Route::resource('user', 'UserController');
  */
 
 //Route::get('fileentry', 'FileEntryController@index');
+
 Route::get('fileentry/get/{filename}', [
     'as' => 'getentry',
     'uses' => 'FileEntryController@get']);
 
-//Route::post('fileentry/add', [
-//    'as' => 'addentry',
-//    'uses' => 'FileEntryController@add']);
+/*Route::post('fileentry/add', [
+    'as' => 'addentry',
+    'uses' => 'FileEntryController@add']);*/
 
 /*
  * Admin
