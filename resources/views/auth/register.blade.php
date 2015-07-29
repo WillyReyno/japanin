@@ -49,7 +49,7 @@
 							</div>
 						</div>
 
-						<div class="form-group" id="sandbox-container">
+						{{--<div class="form-group" id="sandbox-container">
                             <label class="col-md-4 control-label">Date de naissance</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control" name="birth" value="{{ old('birth') }}">
@@ -62,7 +62,7 @@
                             <div class="col-md-2">
 								{!! Form::select('sex', ['woman' => 'Femme', 'man' => 'Homme', 'other' => 'Autre'], Input::old('type_id'), ['class' => 'form-control']) !!}
                             </div>
-                        </div>
+                        </div>--}}
 
 						<!--<div class="form-group">
                             <label class="col-md-4 control-label">Avatar</label>

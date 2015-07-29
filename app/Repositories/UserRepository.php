@@ -8,25 +8,13 @@ class UserRepository
         $user = User::where('provider_id', '=', $userData->id)->first();
 
         if(!$user) {
-            if(empty($userData->nickname)) {
-                $user = User::create([
-                    'provider_id' => $userData->id,
-                    'name' => $userData->name,
-                    'username' => $userData->name,
-                    'email' => $userData->email,
-                    'avatar' => $userData->avatar,
-                    'active' => 1,
-                ]);
-            } else {
-                $user = User::create([
-                    'provider_id' => $userData->id,
-                    'name' => $userData->name,
-                    'username' => $userData->nickname,
-                    'email' => $userData->email,
-                    'avatar' => $userData->avatar,
-                    'active' => 1,
-                ]);
-            }
+            $user = User::create([
+                'provider_id' => $userData->id,
+                'username' => $userData->name,
+                'email' => $userData->email,
+                'avatar' => $userData->avatar,
+                'active' => 1,
+            ]);
         }
 
         $this->checkIfUserNeedsUpdating($userData, $user);
@@ -37,26 +25,19 @@ class UserRepository
         $socialData = [
             'avatar' => $userData->avatar,
             'email' => $userData->email,
-            'name' => $userData->name,
-            'username' => $userData->nickname,
+            'username' => $userData->name,
         ];
 
         $dbData = [
             'avatar' => $user->avatar,
             'email' => $user->email,
-            'name' => $user->name,
             'username' => $user->username,
         ];
 
         if(!empty(array_diff($socialData, $dbData))) {
-            if(empty($userData->nickname)) {
-                $user->username = $userData->name;
-            } else {
-                $user->username = $userData->nickname;
-            }
+            $user->username = $userData->name;
             $user->avatar = $userData->avatar;
             $user->email = $userData->email;
-            $user->name = $userData->name;
             $user->save();
         }
     }

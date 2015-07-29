@@ -18,7 +18,8 @@
 							</div>
 						@endif
 						<a class="btn btn-primary" href="/login/facebook">Se connecter avec Facebook</a><br>
-						<a class="btn btn-danger" href="/login/google">Se connecter avec Google</a>
+						<a class="btn btn-danger" href="/login/google">Se connecter avec Google</a><br>
+						<a class="btn btn-info" href="/login/twitter">Se connecter avec Twitter</a><br>
 
 						<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">

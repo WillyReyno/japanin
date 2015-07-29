@@ -46,8 +46,7 @@ class AuthController extends Controller {
             'username' => 'required|max:255', //TODO Unique ou non ? Checker dans les oldslugs ?
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'birth' => 'required|date',
-            'sex' => 'required'
+            'birth' => 'date',
         ]);
     }
 
@@ -62,9 +61,7 @@ class AuthController extends Controller {
         $new_user = User::create([
             'username' => $data['username'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'birth' => $data['birth'],
-            'sex' => $data['sex']
+            'password' => bcrypt($data['password'])
         ]);
 
         User::find($new_user['id'])->attachRole(2);

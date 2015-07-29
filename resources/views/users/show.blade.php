@@ -10,7 +10,9 @@
 
                     <div class="panel-body">
                         <h2>{{ $user->username }}</h2>
+                        @if(Auth::user()->email)
                         <img src="{{Gravatar::get($user->email)}}">
+                        @endif
 
                         <h3>Informations</h3>
                         <ul>

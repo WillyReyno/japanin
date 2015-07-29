@@ -46,4 +46,10 @@ return [
 		'redirect' => env('WEBSITE_URL').'/login/google',
 	],
 
+	'twitter' => [
+		'client_id' => env('TWITTER_CLIENT_ID'),
+		'client_secret' => env('TWITTER_CLIENT_SECRET'),
+		'redirect' => env('WEBSITE_URL').'/login/twitter',
+	],
+
 ];
