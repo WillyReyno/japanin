@@ -4,6 +4,8 @@ use App\Models\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\AuthenticateUser;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller {
 
@@ -68,5 +70,14 @@ class AuthController extends Controller {
         User::find($new_user['id'])->attachRole(2);
 
         return $new_user;
+    }
+
+    public function login(AuthenticateUser $authenticateUser, Request $request, $provider = null) {
+        return $authenticateUser->execute($request->all(), $this, $provider);
+    }
+
+    public function userHasLoggedIn($user) {
+        \Session::flash('message', 'Bienvenue, '.$user->username);
+        return redirect('/'); // TODO edit this
     }
 }

@@ -37,13 +37,13 @@ return [
 	'facebook' => [
 		'client_id' => env('FACEBOOK_CLIENT_ID'),
 		'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-		'redirect' => 'http://local.japanin.fr/login/fb',
+		'redirect' => env('WEBSITE_URL').'/login/facebook',
 	],
 
 	'google' => [
 		'client_id' => env('GOOGLE_CLIENT_ID'),
 		'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-		'redirect' => 'http://local.japanin.fr/login/g',
+		'redirect' => env('WEBSITE_URL').'/login/google',
 	],
 
 ];
