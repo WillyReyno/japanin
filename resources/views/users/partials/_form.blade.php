@@ -38,7 +38,7 @@
     <label class="col-md-4 control-label">Sexe</label>
 
     <div class="col-md-2">
-        {!! Form::select('sex', ['woman' => 'Femme', 'man' => 'Homme', 'other' => 'Autre'], Input::old('type_id'), ['class' => 'form-control']) !!}
+        {!! Form::select('sex', ['female' => 'Femme', 'male' => 'Homme', 'other' => 'Autre'], Input::old('type_id'), ['class' => 'form-control']) !!}
     </div>
 </div>
 

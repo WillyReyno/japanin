@@ -10,22 +10,37 @@
 
                     <div class="panel-body">
                         <h2>{{ $user->username }}</h2>
-                        @if(Auth::user()->email)
-                        <img src="{{Gravatar::get($user->email)}}">
+                        @if($user->avatar)
+                            <img src="{{ $user->avatar }}">
+                        @elseif(Gravatar::get($user->email))
+                            <img src="{{Gravatar::get($user->email)}}">
+                        @else
+                            <!-- TODO avatar par défaut -->
                         @endif
 
                         <h3>Informations</h3>
                         <ul>
-                            <li>Pseudo : {{ $user->username }}</li>
-                            <li>E-mail : {{ $user->email }}</li> <!-- TODO à masquer plus tard -->
-                            <li>Date de naissance : {{ $user->birth }}</li>
-                            <li>Sexe : {{ $user->sex }}</li>
+                            <!-- TODO une option dans le profil pour masquer ces infos ? -->
+                            @if($user->email)
+                                <li>E-mail : {{ $user->email }}</li>
+                            @endif
+
+                            @if($user->birth != "0000-00-00")
+                                <li>Date de naissance : {{ $user->birth }}</li>
+                            @endif
+
+                            @if(!empty($user->sex))
+                                <li>Sexe : {{ $user->sex }}</li>
+                            @endif
                         </ul>
+
                         <h3>Évènements ajoutés</h3>
                         <ul>
-                            @foreach($events_created as $event_created)
+                            @forelse($events_created as $event_created)
                                 <li><a href="{{ route('event.show', $event_created->slug) }}">{{$event_created->name}}</a></li>
-                            @endforeach
+                            @empty
+                                <li>Aucun évènement ajouté pour le moment.</li>
+                            @endforelse
                         </ul>
 
                         {{--<h3>A été aux évènements suivants : </h3>

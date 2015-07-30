@@ -62,16 +62,16 @@
         },
         {
             "name": "bican/roles",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/romanbican/roles.git",
-                "reference": "8958428dc02b7d1d358784575a44eda901706cab"
+                "reference": "fd275b04556e5cab90a3faa543ef572f5b09b44c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/romanbican/roles/zipball/8958428dc02b7d1d358784575a44eda901706cab",
-                "reference": "8958428dc02b7d1d358784575a44eda901706cab",
+                "url": "https://api.github.com/repos/romanbican/roles/zipball/fd275b04556e5cab90a3faa543ef572f5b09b44c",
+                "reference": "fd275b04556e5cab90a3faa543ef572f5b09b44c",
                 "shasum": ""
             },
             "require": {
@@ -103,7 +103,7 @@
                 "permissions",
                 "roles"
             ],
-            "time": "2015-07-01 08:22:07"
+            "time": "2015-07-29 20:51:24"
         },
         {
             "name": "classpreloader/classpreloader",
