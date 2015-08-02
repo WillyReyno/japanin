@@ -80,3 +80,19 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+//Social Login
+
+// Route to login user via Facebook, Google or Twitter
+Route::get('/login/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuth',
+    'as'   => 'auth.getSocialAuth'
+]);
+
+// Callback route for Facebook, Google and Twitter
+Route::get('/login/callback/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuthCallback',
+    'as'   => 'auth.getSocialAuthCallback'
+]);
+
+
