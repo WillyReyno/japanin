@@ -1,14 +1,15 @@
 <?php namespace App\Repositories;
 
 use App\Models\User;
+
 class UserRepository
 {
-    public function findByUserNameOrCreate($userData) {
+    public function findByUserNameOrCreate($userData, $provider) {
         $user = User::where('provider_id', '=', $userData->id)->first();
-
         if(!$user) {
             $user = User::create([
                 'provider_id' => $userData->id,
+                'provider' => $provider,
                 'username' => $userData->name,
                 'email' => $userData->email,
                 'avatar' => $userData->avatar,
