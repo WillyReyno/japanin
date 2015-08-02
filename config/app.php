@@ -205,7 +205,7 @@ return [
         'HTML'      => 'Illuminate\Html\HtmlFacade',
 
 		'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
-		'Socialize' => 'Laravel\Socialite\Facades\Socialite',
+		'Socialite' => 'Laravel\Socialite\Facades\Socialite',
 
 
 	],
