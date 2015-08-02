@@ -7,6 +7,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Evènements !</div>
 
+                    @role('admin')
+                        Vous êtes administrateur !
+                    @endrole
+
                     <div class="panel-body">
                         <h2>Évènements</h2>
                         @if(Auth::check())

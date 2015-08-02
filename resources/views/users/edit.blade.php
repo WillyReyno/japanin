@@ -1,14 +1,11 @@
 @extends('app')
 
-@section('css')
-    <link href="{{ asset('/css/bootstrap3-wysihtml5.css')}}" rel="stylesheet">
-@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Modifier l'évènement</div>
+                    <div class="panel-heading">Modifier le profil</div>
                     <div class="panel-body">
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
@@ -21,9 +18,10 @@
                             </div>
                         @endif
 
-                        @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->allowed('edit.event', $event)))
-                            {!! Form::model($event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update', $event->slug], 'class' => 'form-horizontal']) !!}
-                            @include('events/partials/_form', ['submit_text' => 'Sauvegarder'])
+
+                        @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id == $user->id))
+                            {!! Form::model($user, ['method' => 'PATCH', 'files' => true, 'route' => ['user.update', $user->slug], 'class' => 'form-horizontal']) !!}
+                            @include('users/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @elseif(!Auth::check())
                             <p>Vous devez être connecté afin d'ajouter un évènement.<br>

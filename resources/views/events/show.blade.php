@@ -4,6 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+
                 <div class="panel panel-default">
                     <div class="panel-heading">{{$event->name}}</div>
                     <div class="panel-body">
@@ -16,13 +17,46 @@
                             <li><strong>Date de début :</strong> {{$event->start_date}}</li>
                             <li><strong>Date de fin :</strong> {{$event->end_date}}</li>
                             <li><strong>Description :</strong> {!! html_entity_decode($event->description) !!}</li>
-                            <li><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive"></li>
+                            @if($event->poster)
+                                <li class="col-md-3"><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive img-thumbnail"></li>
+                            @endif
+                            <li><strong>Ajouté par :</strong> <a href="{{ route('user.show', $author->slug) }}">{{$author->username}}</a></li>
                         </ul>
-                        @if(Auth::check())
-                            <!-- Todo créer les fonctionnalités de modif / suppression
-                            Todo faire les vérifications selon si l'utilisateur est le créateur ou non (voir middleware) -->
-                            Modifier | Supprimer
+
+                        @allowed('', $event)
+                        Tu as créé cet évènement !
+                        @endallowed
+
+                        @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $event->user_id))
+                            {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
+
+                            @allowed('edit.event', $event)
+                            {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
+                            @endallowed
+
+                            @allowed('delete.event', $event)
+                            {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
+                            @endallowed
+
+                            {!! Form::close() !!}
+
                         @endif
+
+                        {{-- TODO Ajax here --}}
+                        @if($went)
+                            {!! HTML::linkAction('EventController@userGoing', "Ne plus participer", $event) !!}
+                        @else
+                            {!! HTML::linkAction('EventController@userGoing', "Participer", $event) !!}
+                        @endif
+
+                        <h3>Participants</h3>
+
+                        <ul>
+                            @foreach($event->users as $e_users)
+                                <li>{{ App\Models\User::find($e_users->pivot->user_id)->username }}</li>
+                            @endforeach
+                        </ul>
+
                     </div>
                 </div>
             </div>
@@ -41,5 +75,6 @@
             format: "yyyy-mm-dd",
             language: "fr"
         });
+
     </script>
 @endsection

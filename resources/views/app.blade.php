@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
     <link href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
-    <link href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    {{--<link href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>--}}
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
     @yield('css')
@@ -39,16 +39,22 @@
         <div class="collapse navbar-collapse" id="japanin-navbar">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/event') }}">Évènements</a></li>
+                <li><a href="{{ url('/user') }}">Membres</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
+
                     <li><a href="{{ url('/auth/login') }}">Connexion</a></li>
                     <li><a href="{{ url('/auth/register') }}">Inscription</a></li>
                 @else
+                    @if(Auth::user()->email)
+                    <li><img src="{{Gravatar::get(Auth::user()->email,'small-secure')}}"></li>
+                    @endif
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ url('/user', Auth::user()->slug) }}">Profil</a></li>
                             <li><a href="{{ url('/auth/logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>

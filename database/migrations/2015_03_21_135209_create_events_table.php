@@ -15,7 +15,7 @@ class CreateEventsTable extends Migration {
         Schema::create('events', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('slug')->unique();
             $table->integer('type_id')->unsigned();
             $table->string('address');
@@ -25,13 +25,14 @@ class CreateEventsTable extends Migration {
             $table->date('end_date');
             $table->text('description');
             $table->string('poster');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->boolean('private')->default(false);
             $table->boolean('active')->default(false);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('type_id')->references('id')->on('types');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
