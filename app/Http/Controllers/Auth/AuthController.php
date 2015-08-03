@@ -69,7 +69,7 @@ class AuthController extends Controller {
             'password' => bcrypt($data['password'])
         ]);
 
-        User::find($new_user['id'])->attachRole(2);
+        $new_user->attachRole(2);
 
         return $new_user;
     }
