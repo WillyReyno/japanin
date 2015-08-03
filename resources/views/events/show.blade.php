@@ -20,7 +20,9 @@
                             @if($event->poster)
                                 <li class="col-md-3"><strong>Affiche :</strong> <img src="{{route('getentry', $event->poster)}}" class="img-responsive img-thumbnail"></li>
                             @endif
-                            <li><strong>Ajouté par :</strong> <a href="{{ route('user.show', $author->slug) }}">{{$author->username}}</a></li>
+                            @if($author)
+                                <li><strong>Ajouté par :</strong> <a href="{{ route('user.show', $author->slug) }}">{{$author->username}}</a></li>
+                            @endif
                         </ul>
 
                         @allowed('', $event)
@@ -43,10 +45,12 @@
                         @endif
 
                         {{-- TODO Ajax here --}}
-                        @if($went)
-                            {!! HTML::linkAction('EventController@userGoing', "Ne plus participer", $event) !!}
-                        @else
-                            {!! HTML::linkAction('EventController@userGoing', "Participer", $event) !!}
+                        @if(Auth::check())
+                            @if($went)
+                                {!! HTML::linkAction('EventController@userGoing', "Ne plus participer", $event) !!}
+                            @else
+                                {!! HTML::linkAction('EventController@userGoing', "Participer", $event) !!}
+                            @endif
                         @endif
 
                         <h3>Participants</h3>
