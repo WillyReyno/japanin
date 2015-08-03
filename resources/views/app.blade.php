@@ -48,9 +48,15 @@
                     <li><a href="{{ url('/auth/login') }}">Connexion</a></li>
                     <li><a href="{{ url('/auth/register') }}">Inscription</a></li>
                 @else
-                    @if(Auth::user()->email)
-                    <li><img src="{{Gravatar::get(Auth::user()->email,'small-secure')}}"></li>
-                    @endif
+                    <li>
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Auth::user()->avatar }}">
+                        @elseif(Gravatar::get(Auth::user()->email))
+                            <img src="{{Gravatar::get(Auth::user()->email)}}">
+                            <!-- TODO avatar par défaut -->
+                        @endif
+                    </li>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
