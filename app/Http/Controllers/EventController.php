@@ -91,7 +91,11 @@ class EventController extends CommonController {
     {
         $type = Type::find($event->type_id);
         $author = User::find($event->user_id);
-        $went = $this->userWent(Auth::user(), $event);
+        if(Auth::check()) {
+            $went = $this->userWent(Auth::user(), $event);
+        } else {
+            $went = false;
+        }
 
         return view('events.show', compact('event', 'type', 'author', 'went'));
     }

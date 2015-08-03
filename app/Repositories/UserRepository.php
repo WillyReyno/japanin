@@ -5,6 +5,13 @@ use App\Models\User;
 class UserRepository
 {
     public function findByUserNameOrCreate($userData, $provider) {
+
+        if(isset($userData->user['gender'])) {
+            $sex = $userData->user['gender'];
+        } else {
+            $sex = null;
+        }
+
         $user = User::where('provider_id', '=', $userData->id)->first();
         if(!$user) {
             $user = User::create([
@@ -13,8 +20,11 @@ class UserRepository
                 'username' => $userData->name,
                 'email' => $userData->email,
                 'avatar' => $userData->avatar,
+                'sex' => $sex,
                 'active' => 1,
             ]);
+
+            $user->attachRole(2);
         }
 
         $this->checkIfUserNeedsUpdating($userData, $user);

@@ -25,7 +25,7 @@
                                 <li>E-mail : {{ $user->email }}</li>
                             @endif
 
-                            @if($user->birth != "0000-00-00")
+                            @if($user->birth != "0000-00-00" AND $user->birth != null)
                                 <li>Date de naissance : {{ $user->birth }}</li>
                             @endif
 
