@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration {
             $table->string('sex')->nullable();
             $table->boolean('active')->default(true);
 			$table->string('provider')->nullable();
-			$table->string('provider_id')->unique();
+			$table->string('provider_id')->unique()->nullable();
 			$table->rememberToken();
 			$table->timestamps();
 		});

@@ -10,6 +10,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class AuthController extends Controller {
 
@@ -26,7 +27,8 @@ class AuthController extends Controller {
 
     use AuthenticatesAndRegistersUsers;
 
-    protected $redirectTo = '/';
+
+    protected $redirectTo = '';
 
     /**
      * Create a new authentication controller instance.
@@ -76,9 +78,32 @@ class AuthController extends Controller {
         return $new_user;
     }
 
-    // Override function to login with username instead of email
+    /**
+     * Override to redirect to the previous url
+     * Original : vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php
+     **/
+    protected function handleUserWasAuthenticated(Request $request, $throttles)
+    {
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        if (method_exists($this, 'authenticated')) {
+            return $this->authenticated($request, Auth::user());
+        }
+        return Redirect::back();
+    }
+
+    /**
+     * Override function to log with username instead of email
+     * Original : vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function postLogin(Request $request)
     {
+        dd(URL::previous());
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -113,6 +138,43 @@ class AuthController extends Controller {
             ]);
     }
 
+    /**
+     * Override postRegister to change redirect url
+     * Original : vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php
+     *
+     * @param Request $request
+     * @return Redirect
+     */
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::login($this->create($request->all()));
+
+        return Redirect::back();
+    }
+
+    /**
+     * Override getLogout to change redirect after
+     * @return Redirect
+     */
+    public function getLogout()
+    {
+        Auth::logout();
+
+        return Redirect::back();
+    }
+
+    /**
+     * @param null $provider
+     * @return mixed
+     */
     public function getSocialAuth($provider=null)
     {
         if(!config("services.$provider")) abort('404'); //just to handle providers that doesn't exist
@@ -121,6 +183,10 @@ class AuthController extends Controller {
     }
 
 
+    /**
+     * @param null $provider
+     * @return mixed
+     */
     public function getSocialAuthCallback($provider=null)
     {
         if($user = $this->socialite->with($provider)->user()){
@@ -144,7 +210,7 @@ class AuthController extends Controller {
 
             $this->auth->login($current_user, true);
 
-            return redirect('/');
+            return Redirect::back();
 
         } else {
             return Redirect::to('auth/login')
