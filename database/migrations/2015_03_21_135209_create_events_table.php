@@ -17,7 +17,7 @@ class CreateEventsTable extends Migration {
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->integer('type_id')->unsigned();
+            $table->string('type_slug');
             $table->string('address');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
@@ -31,7 +31,7 @@ class CreateEventsTable extends Migration {
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('type_slug')->references('slug')->on('types');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }

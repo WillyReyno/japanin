@@ -52,7 +52,7 @@ class AuthController extends Controller {
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|max:255', //TODO Unique ou non ? Checker dans les oldslugs ?
+            'username' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
             'birth' => 'date',
@@ -103,7 +103,6 @@ class AuthController extends Controller {
      */
     public function postLogin(Request $request)
     {
-        dd(URL::previous());
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'

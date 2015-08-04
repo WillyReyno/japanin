@@ -22,7 +22,7 @@
                         @endif
 
                         @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->allowed('edit.event', $event)))
-                            {!! Form::model($event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update', $event->slug], 'class' => 'form-horizontal']) !!}
+                            {!! Form::model($event, ['method' => 'PATCH', 'files' => true, 'route' => ['event.update', $event->id], 'class' => 'form-horizontal']) !!}
                             @include('events/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @elseif(!Auth::check())

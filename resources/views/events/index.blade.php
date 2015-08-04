@@ -19,11 +19,13 @@
                         @if ( !$events->count() )
                             Aucun évènement pour le moment.
                         @else
-                            <ul>
-                                @foreach( $events as $event )
-                                    <li><a href="{{ route('event.show', $event->slug) }}">{{ $event->name }}</a></li>
-                                @endforeach
-                            </ul>
+
+
+                                <ul>
+                                    @foreach( $events as $event )
+                                        <li><a href="{{ route('showEvents', [$event->type_slug, $event->slug, $event->id]) }}">{{ $event->name }}</a></li>
+                                    @endforeach
+                                </ul>
                         @endif
                     </div>
                 </div>

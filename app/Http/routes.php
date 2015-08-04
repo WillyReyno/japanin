@@ -11,29 +11,42 @@
 |
 */
 
-use App\Models\Oldslug;
 use App\Models\UsersOldslug;
 use App\Models\Event;
 use App\Models\User;
 
 // Fourni un objet aux méthodes du controller plutôt qu'un id
-Route::model('event', 'Event');
+//Route::model('event', 'Event');
 Route::model('user', 'User');
 
 
 // Index
 Route::get('/', 'HomeController@index');
 
+/* Authentification  */
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
 
 
-Route::bind('event', function($slug) {
-    $oldSlug = Oldslug::whereSlug($slug)->first();
-    if (is_null($oldSlug)) {
-        return Event::whereSlug($slug)->first();
-    } else {
-        return $slug;
-    }
-});
+/* Facebook, Twitter and Google Route  */
+Route::get('/login/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuth',
+    'as'   => 'auth.getSocialAuth'
+]);
+
+/* Callback route for Facebook, Twitter and Google  */
+Route::get('/login/callback/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuthCallback',
+    'as'   => 'auth.getSocialAuthCallback'
+]);
+
+
+//
+//Route::bind('event', function($slug) {
+//        return $slug;
+//});
 
 Route::bind('user', function($slug) {
    $userOldSlug = UsersOldslug::whereSlug($slug)->first();
@@ -44,14 +57,15 @@ Route::bind('user', function($slug) {
     }
 });
 
-// Route qui permet de participer ou de quitter un évènement.
-Route::get('going/{event_id}', 'EventController@userGoing');
 
 
 Route::resource('event', 'EventController');
 
 Route::resource('user', 'UserController');
 
+
+// Route qui permet de participer ou de quitter un évènement.
+Route::get('going/{event_id}', 'EventController@userGoing');
 
 
 /*
@@ -76,23 +90,10 @@ Route::group(['prefix' => 'admin'], function() {
     // Todo Admin Routes
 });
 
-Route::controllers([
-    'auth' => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-]);
 
-//Social Login
-
-// Route to login user via Facebook, Google or Twitter
-Route::get('/login/{provider?}',[
-    'uses' => 'Auth\AuthController@getSocialAuth',
-    'as'   => 'auth.getSocialAuth'
-]);
-
-// Callback route for Facebook, Google and Twitter
-Route::get('/login/callback/{provider?}',[
-    'uses' => 'Auth\AuthController@getSocialAuthCallback',
-    'as'   => 'auth.getSocialAuthCallback'
-]);
-
+/* Events  */
+Route::get('{typeslug}/{slug?}/{id}', [
+    'as' => 'showEvents',
+    'uses' => 'EventController@show']);
+Route::get('event/{id}/edit', 'EventController@edit');
 

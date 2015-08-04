@@ -3,7 +3,6 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Fileentry;
-use App\Models\Oldslug;
 use App\Models\User;
 use App\Models\Type;
 use App\Models\UserEvent;
@@ -22,7 +21,7 @@ class EventController extends CommonController {
 
     protected $rules = [
         'name' => ['required'],
-        'type_id' => ['required'],
+        'type_slug' => ['required'],
         'address' => ['required'],
         'latitude' => ['required'],
         'longitude' => ['required'],
@@ -36,7 +35,6 @@ class EventController extends CommonController {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
         $this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
         // Middleware permettant d'effectuer les redirections 301
-        $this->middleware('oldslug', ['only' => ['show', 'edit']]);
     }
 
 
@@ -58,7 +56,7 @@ class EventController extends CommonController {
      */
     public function create()
     {
-        $types = Type::lists('name', 'id');
+        $types = Type::lists('name', 'slug');
         return view('events.create', compact('types'));
     }
 
@@ -84,12 +82,16 @@ class EventController extends CommonController {
     /**
      * Display the specified resource.
      *
-     * @param Event $event
-     * @return Response
+     * @param $typeslug
+     * @param null $slug
+     * @param $id
+     * @return \Illuminate\View\View
      */
-    public function show(Event $event)
+    public function show($typeslug, $slug = null, $id)
     {
-        $type = Type::find($event->type_id);
+
+        $event = Event::find($id)->where('type_slug', $typeslug)->first();
+        $type = Type::findBySlug($typeslug);
         $author = User::find($event->user_id);
         if(Auth::check()) {
             $went = $this->userWent(Auth::user(), $event);
@@ -103,35 +105,28 @@ class EventController extends CommonController {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Event $event
-     * @return Response
+     * @param $id
+     * @return \Illuminate\View\View
      */
-    public function edit(Event $event)
+    public function edit($id)
     {
-        $types = Type::lists('name', 'id');
+        $event = Event::find($id);
+        $types = Type::lists('name', 'slug');
         return view('events.edit', compact('event', 'types'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Event $event
-     * @return Response
+     * @param $id
+     * @return mixed
      */
-    public function update(Event $event)
+    public function update($id)
     {
+        $event = Event::find($id);
         if(Auth::user()->allowed('edit.event', $event)) {
             // TODO check si ce n'est pas une bêtise de retirer le token ?
             $input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
-
-            /* Saving old slug for 301 redirections */
-            if ($input['name'] != $event->name) {
-                $oldslug = Oldslug::create([
-                    'event_id' => $event->id,
-                    'slug' => $event->slug
-                ]);
-                $oldslug->save();
-            }
 
             /* If a file is sent */
             if (Rqst::file()) {
@@ -139,7 +134,7 @@ class EventController extends CommonController {
             }
             $event->update($input);
 
-            return Redirect::route('event.show', [$event->slug])->with('message', 'Évènement modifié');
+            return Redirect::route('showEvents', [$event->type_slug, $event->slug, $event->id])->with('message', 'Évènement modifié');
         } else {
             return Redirect::route('event.index')->with('message', 'Vous n\'avez pas les permissions requises');
         }
@@ -148,19 +143,16 @@ class EventController extends CommonController {
     /**
      * Remove the specified resource from storage.
      *
-     * @param Event $event
-     * @return Response
+     * @param $id
+     * @return mixed
      */
-    public function destroy(Event $event)
+    public function destroy($id)
     {
+        $event = Event::find($id);
         // On vérifie, au cas où, si l'utilisateur possède bien les droits de suppression de l'évènement.
         if(Auth::user()->allowed('delete.event', $event)) {
 
-            $oldslugs = Oldslug::where('event_id', $event->id);
-
             $event->delete();
-
-            $oldslugs->delete();
 
             return Redirect::route('event.index')->with('message', 'Évènement supprimé');
         } else {
