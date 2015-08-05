@@ -87,7 +87,7 @@ Route::get('fileentry/get/{filename}', [
  */
 
 Route::group(['prefix' => 'admin'], function() {
-    // Todo Admin Routes
+    Route::get('/', 'PandoraController@index');
 });
 
 
