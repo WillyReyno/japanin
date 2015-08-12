@@ -15,7 +15,7 @@
     <link href="{{ asset('/css/admin/AdminLTE.min.css') }}" rel="stylesheet">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link href="{{ asset('/css/admin/skins/_all-skins.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/admin/skins/skin-red.min.css') }}" rel="stylesheet">
     <!-- iCheck -->
     <link href="{{ asset('/js/admin/plugins/iCheck/flat/blue.css') }}" rel="stylesheet">
     <!-- Morris chart -->
