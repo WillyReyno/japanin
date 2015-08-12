@@ -1,5 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\User;
+use GrahamCampbell\GitHub\Facades\GitHub;
+
 class PandoraController extends Controller {
 
     /*
@@ -30,7 +34,17 @@ class PandoraController extends Controller {
      */
     public function index()
     {
-        return view('pandora.index');
+        $latestEvents = Event::take(5)->orderBy('created_at', 'desc')->get();
+        $eventsCount = Event::count(); //Events Number
+
+        $latestUsers = User::take(8)->orderBy('created_at', 'desc')->get();
+        $usersCount = User::count(); // Users Number
+
+        $issues = GitHub::issues()->all('WillyReyno', 'japanin', array('state' => 'all'));
+        //$json_issues = json_encode($issues);
+
+        $vars = ['eventsCount', 'usersCount', 'latestEvents', 'latestUsers', 'issues'];
+        return view('pandora.index', compact($vars));
     }
 
 }

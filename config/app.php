@@ -143,6 +143,8 @@ return [
         'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 		'Creativeorange\Gravatar\GravatarServiceProvider',
 		'Laravel\Socialite\SocialiteServiceProvider',
+		'GrahamCampbell\GitHub\GitHubServiceProvider',
+
 
 		/*
 		 * Application Service Providers...
@@ -206,6 +208,7 @@ return [
 
 		'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
 		'Socialite' => 'Laravel\Socialite\Facades\Socialite',
+		'GitHub' => 'GrahamCampbell\GitHub\Facades\GitHub',
 
 
 	],
