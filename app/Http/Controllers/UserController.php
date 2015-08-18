@@ -4,12 +4,12 @@ use App\Http\Requests;
 use App\Models\Event;
 use App\Models\UserEvent;
 use App\Models\UsersOldslug;
-use Illuminate\Support\Facades\Auth;
+use \Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Input;
+use \Input;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use \Redirect;
 use Validator;
 
 class UserController extends Controller {

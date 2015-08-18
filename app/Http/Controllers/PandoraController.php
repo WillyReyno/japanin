@@ -2,7 +2,7 @@
 
 use App\Models\Event;
 use App\Models\User;
-use GrahamCampbell\GitHub\Facades\GitHub;
+use \GitHub;
 
 class PandoraController extends Controller {
 

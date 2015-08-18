@@ -7,15 +7,14 @@ use App\Models\User;
 use App\Models\Type;
 use App\Models\UserEvent;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Request as Rqst;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request as RequestFile;
+use \Auth;
+use \File;
+use \Storage;
+use \Request as Rqst;
+use \Input;
+use \Redirect;
 
 class EventController extends CommonController {
 
@@ -201,7 +200,7 @@ class EventController extends CommonController {
             $event->users()->attach($user->id);
         }
 
-        return Redirect::route('event.show', [$event->slug]);
+        return Redirect::route('showEvents', array('type_slug' => $event->type_slug, 'slug' => $event->slug, 'id' => $event->id));
     }
 
 }
