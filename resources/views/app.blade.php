@@ -40,6 +40,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/event') }}">Évènements</a></li>
                 <li><a href="{{ url('/user') }}">Membres</a></li>
+                <li><a href="{{ url('/admin') }}">Admin</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

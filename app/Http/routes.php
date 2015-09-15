@@ -83,11 +83,12 @@ Route::get('fileentry/get/{filename}', [
     'uses' => 'FileEntryController@add']);*/
 
 /*
- * Admin
+ * Pandora
  */
 
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'PandoraController@index');
+    Route::resource('/event', 'PandoraEventController');
 });
 
 

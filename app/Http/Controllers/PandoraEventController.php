@@ -12,11 +12,11 @@ use Illuminate\Http\Request;
 use \Auth;
 use \File;
 use \Storage;
-use \Request as Rqst;
 use \Input;
 use \Redirect;
 
-class EventController extends CommonController {
+
+class PandoraEventController extends CommonController {
 
     protected $rules = [
         'name' => ['required'],
@@ -44,8 +44,14 @@ class EventController extends CommonController {
      */
     public function index()
     {
-        $events = Event::all();
-        return view('events.index', compact('events'));
+        $all_events = Event::count();
+        $eventsperpage = 20;
+        if($all_events < $eventsperpage)
+            $eventsperpage = $all_events / 2;
+
+        $events = Event::paginate($eventsperpage);
+
+        return view('pandora.events.index', compact('events'));
     }
 
     /**
@@ -55,8 +61,8 @@ class EventController extends CommonController {
      */
     public function create()
     {
-        $types = Type::lists('name', 'slug');
-        return view('events.create', compact('types'));
+        /*$types = Type::lists('name', 'slug');
+        return view('events.create', compact('types'));*/
     }
 
     /**
@@ -67,7 +73,7 @@ class EventController extends CommonController {
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->rules);
+        /*$this->validate($request, $this->rules);
         $input = Input::all();
         $input['user_id'] = Auth::user()->id;
         if(Rqst::file()) {
@@ -75,7 +81,7 @@ class EventController extends CommonController {
         }
         Event::create($input);
 
-        return Redirect::route('event.index')->with('message', 'Évènement ajouté');
+        return Redirect::route('event.index')->with('message', 'Évènement ajouté');*/
     }
 
     /**
@@ -88,17 +94,17 @@ class EventController extends CommonController {
      */
     public function show($typeslug, $slug = null, $id)
     {
-        $event = Event::find($id);
+
+        /*$event = Event::find($id)->where('type_slug', $typeslug)->first();
         $type = Type::findBySlug($typeslug);
         $author = User::find($event->user_id);
-
         if(Auth::check()) {
             $went = $this->userWent(Auth::user(), $event);
         } else {
             $went = false;
         }
 
-        return view('events.show', compact('event', 'type', 'author', 'went'));
+        return view('events.show', compact('event', 'type', 'author', 'went'));*/
     }
 
     /**
@@ -109,9 +115,9 @@ class EventController extends CommonController {
      */
     public function edit($id)
     {
-        $event = Event::find($id);
+        $event = Event::findOrFail($id);
         $types = Type::lists('name', 'slug');
-        return view('events.edit', compact('event', 'types'));
+        return view('pandora.events.edit', compact('event', 'types'));
     }
 
     /**
@@ -123,7 +129,6 @@ class EventController extends CommonController {
     public function update($id, Request $request)
     {
         $event = Event::find($id);
-
         if(Auth::user()->allowed('edit.event', $event)) {
 
             $input = $request->all();
@@ -135,14 +140,14 @@ class EventController extends CommonController {
 
             $event->update($input);
 
-            return Redirect::route('showEvents', [$event->type_slug, $event->slug, $event->id])
-                ->with('message', 'Évènement modifié');
+            return Redirect::route('admin.event.edit', $event)
+                ->with('message', 'Évènement modifié')
+                ->with('color', 'success');
 
         } else {
-
             return Redirect::route('event.index')
-                ->with('message', 'Vous n\'avez pas les permissions requises');
-
+                ->with('message', 'Vous n\'avez pas les permissions requises')
+                ->with('color', 'warning');
         }
     }
 
@@ -155,59 +160,11 @@ class EventController extends CommonController {
     public function destroy($id)
     {
         $event = Event::find($id);
-        // On vérifie, au cas où, si l'utilisateur possède bien les droits de suppression de l'évènement.
-        if(Auth::user()->allowed('delete.event', $event)) {
 
-            $event->delete();
+        $event->delete();
 
-            return Redirect::route('event.index')->with('message', 'Évènement supprimé');
-        } else {
-            return Redirect::route('event.index')->with('message', 'Vous n\'avez pas les permissions requises');
-        }
-
+        return Redirect::back()
+            ->with('message', 'Évènement supprimé')
+            ->with('color', 'danger');
     }
-
-    /**
-     * Checks if a user is going or went to a specific event
-     *
-     * @param User $user
-     */
-    public function userWent(User $user, Event $event) {
-
-        $went = UserEvent::where('user_id', $user->id)
-            ->where('event_id', $event->id)
-            ->get();
-
-        if(!empty($went[0])){
-            return true;
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Add/Remove user to the event
-     *
-     * @param $event_id
-     * @return mixed
-     */
-    public function userGoing($event_id)
-    {
-
-        $user = Auth::user();
-        $event = Event::find($event_id);
-
-        // TODO currently checked twice in process, see if it can be improved
-        $went = $this->userWent($user, $event);
-
-        if($went){
-            $event->users()->detach($user->id);
-        } else {
-            $event->users()->attach($user->id);
-        }
-
-        return Redirect::route('showEvents', array('type_slug' => $event->type_slug, 'slug' => $event->slug, 'id' => $event->id));
-    }
-
 }
