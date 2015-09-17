@@ -33,9 +33,7 @@ class PandoraEventController extends CommonController {
     {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
         $this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
-        // Middleware permettant d'effectuer les redirections 301
     }
-
 
     /**
      * Display a listing of the resource.
@@ -47,64 +45,11 @@ class PandoraEventController extends CommonController {
         $all_events = Event::count();
         $eventsperpage = 20;
         if($all_events < $eventsperpage)
-            $eventsperpage = $all_events / 2;
+            $eventsperpage = null;
 
         $events = Event::paginate($eventsperpage);
 
         return view('pandora.events.index', compact('events'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        /*$types = Type::lists('name', 'slug');
-        return view('events.create', compact('types'));*/
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        /*$this->validate($request, $this->rules);
-        $input = Input::all();
-        $input['user_id'] = Auth::user()->id;
-        if(Rqst::file()) {
-            $input['poster'] = $this->imageUpload('poster', true);
-        }
-        Event::create($input);
-
-        return Redirect::route('event.index')->with('message', 'Évènement ajouté');*/
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param $typeslug
-     * @param null $slug
-     * @param $id
-     * @return \Illuminate\View\View
-     */
-    public function show($typeslug, $slug = null, $id)
-    {
-
-        /*$event = Event::find($id)->where('type_slug', $typeslug)->first();
-        $type = Type::findBySlug($typeslug);
-        $author = User::find($event->user_id);
-        if(Auth::check()) {
-            $went = $this->userWent(Auth::user(), $event);
-        } else {
-            $went = false;
-        }
-
-        return view('events.show', compact('event', 'type', 'author', 'went'));*/
     }
 
     /**

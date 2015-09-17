@@ -288,10 +288,10 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="{{ url('/user', Auth::user()->id) }}" class="btn btn-default btn-flat">Profil</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="{{ url('/auth/logout') }}" class="btn btn-default btn-flat">Déconnexion</a>
                                 </div>
                             </li>
                         </ul>
@@ -350,7 +350,7 @@
                     </a>
                 </li>
                 <li class="{{ set_active(['admin/user']) }} treeview">
-                    <a href="">
+                    <a href="{{ route('admin.user.index') }}">
                         <i class="fa fa-user"></i> <span>Utilisateurs</span>
                     </a>
                 </li>

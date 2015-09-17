@@ -11,13 +11,12 @@
 |
 */
 
-use App\Models\UsersOldslug;
 use App\Models\Event;
 use App\Models\User;
 
 // Fourni un objet aux méthodes du controller plutôt qu'un id
 //Route::model('event', 'Event');
-Route::model('user', 'User');
+//Route::model('user', 'User');
 
 
 // Index
@@ -43,20 +42,10 @@ Route::get('/login/callback/{provider?}',[
 ]);
 
 
-//
-//Route::bind('event', function($slug) {
+
+//Route::bind('user', function($slug) {
 //        return $slug;
 //});
-
-Route::bind('user', function($slug) {
-   $userOldSlug = UsersOldslug::whereSlug($slug)->first();
-    if(is_null($userOldSlug)) {
-        return User::whereSlug($slug)->first();
-    } else {
-        return $slug;
-    }
-});
-
 
 
 Route::resource('event', 'EventController');
@@ -89,6 +78,7 @@ Route::get('fileentry/get/{filename}', [
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/', 'PandoraController@index');
     Route::resource('/event', 'PandoraEventController');
+    Route::resource('/user', 'PandoraUserController');
 });
 
 
@@ -96,5 +86,6 @@ Route::group(['prefix' => 'admin'], function() {
 Route::get('{typeslug}/{slug?}/{id}', [
     'as' => 'showEvents',
     'uses' => 'EventController@show']);
+
 Route::get('event/{id}/edit', 'EventController@edit');
 
