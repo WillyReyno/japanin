@@ -12,7 +12,7 @@
             <div class="alert alert-{!! Session::get('color') !!}" role="alert">
                 {{Session::get('message')}}
             </div>
-        @endif
+            @endif
                     <!-- Main row -->
             <div class="row">
                 <!-- Left col -->
@@ -26,9 +26,9 @@
                                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                             </div>
                         </div><!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body ">
                             <div class="table-responsive">
-                                <table class="table no-margin">
+                                <table class="table no-margin event-table">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
@@ -40,6 +40,7 @@
                                         <th>Supprimer</th>
                                     </tr>
                                     </thead>
+
                                     <tbody>
                                     @foreach ($events as $event)
                                         <tr>
@@ -470,7 +471,20 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+@endsection
 
+@section('script')
 
+    <script type="text/javascript">
 
+        $(function(){
+            $('.event-table').DataTable(
+                    {
+                        "columnDefs": [
+                            { "searchable": false, "targets": [5, 6] }
+                        ]
+                    }
+            );
+        });
+    </script>
 @endsection

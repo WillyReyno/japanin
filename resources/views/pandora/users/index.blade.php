@@ -28,7 +28,7 @@
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             <div class="table-responsive">
-                                <table class="table no-margin">
+                                <table class="table no-margin user-table">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
@@ -45,15 +45,15 @@
                                             <td>{{ $user->id }}</td>
                                             @if($user == Auth::user())
                                                 <strong></strong>
-                                                @endif
+                                            @endif
                                             <td>
                                                 @if($user == Auth::user())
                                                     <strong> {{--Temporaire, pour afficher le pseudo du compte actuel en gras--}}
+                                                        @endif
+                                                        {{ $user->username }}
+                                                        @if($user == Auth::user())
+                                                    </strong> {{--Temporaire, pour afficher le pseudo du compte actuel en gras--}}
                                                 @endif
-                                                {{ $user->username }}
-                                                    @if($user == Auth::user())
-                                                     </strong> {{--Temporaire, pour afficher le pseudo du compte actuel en gras--}}
-                                                    @endif
                                             </td>
                                             <td>{{ ($user->provider) ? $user->provider : 'japanin' }}</td>
                                             <td>{{ ($user->active) ? 'Oui' : 'Non' }}</td>
@@ -88,7 +88,20 @@
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
+@endsection
 
+@section('script')
 
+    <script type="text/javascript">
 
+        $(function(){
+            $('.user-table').DataTable(
+                    {
+                        "columnDefs": [
+                            { "searchable": false, "targets": [4, 5] }
+                        ]
+                    }
+            );
+        });
+    </script>
 @endsection

@@ -11,6 +11,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons 2.0.0 -->
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Datatables -->
+    <link href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <!-- Theme style -->
     <link href="{{ asset('/css/admin/AdminLTE.min.css') }}" rel="stylesheet">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -511,11 +515,17 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('/js/admin/app.min.js') }}" type="text/javascript"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('/js/admin/pages/dashboard2.js') }}" type="text/javascript"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('/js/admin/demo.js') }}" type="text/javascript"></script>
 <!-- ChartJS 1.0.1 -->
 <script src="{{ asset('/js/admin/plugins/chartjs/Chart.min.js')}}" type="text/javascript"></script>
+
+<!-- DataTables -->
+<script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+
+
+@yield('script')
 
 </body>
 </html>
