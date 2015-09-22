@@ -42,12 +42,13 @@ class PandoraEventController extends CommonController {
      */
     public function index()
     {
-        $all_events = Event::count();
-        $eventsperpage = 20;
+       /* $all_events = Event::count();
+        $eventsperpage = 3;
         if($all_events < $eventsperpage)
             $eventsperpage = null;
 
-        $events = Event::paginate($eventsperpage);
+        $events = paginate($eventsperpage);*/
+        $events = Event::all();
 
         return view('pandora.events.index', compact('events'));
     }

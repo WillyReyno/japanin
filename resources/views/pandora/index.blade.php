@@ -168,7 +168,7 @@
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table no-margin">
+                            <table class="table no-margin issues-table">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
@@ -769,8 +769,14 @@
 <!-- Add the sidebar's background. This div must be placed
      immediately after the control sidebar -->
 <div class="control-sidebar-bg"></div>
+@endsection
 
+@section('script')
 
+    <script type="text/javascript">
 
-
+        $(function(){
+            $('.issues-table').DataTable();
+        });
+    </script>
 @endsection

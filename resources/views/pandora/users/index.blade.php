@@ -77,7 +77,8 @@
 
                                     </tbody>
                                 </table>
-                                {!! $users->render() !!}
+                                {{-- $users->render() --}}
+
                             </div><!-- /.table-responsive -->
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->

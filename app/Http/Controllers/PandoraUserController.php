@@ -27,13 +27,15 @@ class PandoraUserController extends Controller {
     public function index()
     {
 
-        $all_users = User::count();
+        /*$all_users = User::count();
         $usersperpage = 20;
 
         if($all_users < $usersperpage)
             $usersperpage = null;
 
-        $users = User::paginate($usersperpage);
+        $users = User::paginate($usersperpage);*/
+
+        $users = User::all();
 
         return view('pandora.users.index', compact('users'));
     }

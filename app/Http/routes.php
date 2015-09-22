@@ -11,14 +11,6 @@
 |
 */
 
-use App\Models\Event;
-use App\Models\User;
-
-// Fourni un objet aux méthodes du controller plutôt qu'un id
-//Route::model('event', 'Event');
-//Route::model('user', 'User');
-
-
 // Index
 Route::get('/', 'HomeController@index');
 
@@ -41,17 +33,13 @@ Route::get('/login/callback/{provider?}',[
     'as'   => 'auth.getSocialAuthCallback'
 ]);
 
-
-
-//Route::bind('user', function($slug) {
-//        return $slug;
-//});
+Route::get('user/edit', ['as' => 'user.edit', 'uses' => 'UserController@edit'] );
+Route::get('user/destroy', ['as' => 'user.destroy', 'uses' => 'UserController@destroy'] );
 
 
 Route::resource('event', 'EventController');
 
-Route::resource('user', 'UserController');
-
+Route::resource('user', 'UserController', ['except' => ['edit', 'destroy']]);
 
 // Route qui permet de participer ou de quitter un évènement.
 Route::get('going/{event_id}', 'EventController@userGoing');

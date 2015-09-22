@@ -62,6 +62,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url('/user', Auth::user()->id) }}">Profil</a></li>
+                            <li><a href="{{ route('user.edit') }}">Modifier son profil</a></li>
+                            <li><a onclick="return confirm('Souhaitez-vous vraiment supprimer votre compte ?')" href="{{ route('user.destroy') }}">Supprimer son compte</a></li>
                             <li><a href="{{ url('/auth/logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>

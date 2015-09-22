@@ -70,7 +70,7 @@
 
                                     </tbody>
                                 </table>
-                                {!! $events->render() !!}
+                                {{-- $events->render() --}}
                             </div><!-- /.table-responsive -->
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->

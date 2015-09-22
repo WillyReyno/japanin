@@ -72,9 +72,9 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		$user = User::find($id);
+		$user = User::find(Auth::user()->id);
 		return view('users.edit', compact('user'));
 	}
 
@@ -142,9 +142,9 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		$user = User::find($id);
+		$user = User::find(Auth::user()->id);
 		if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $user->id)) {
 
 			$user->delete();

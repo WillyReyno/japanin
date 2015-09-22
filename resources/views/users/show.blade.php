@@ -56,10 +56,6 @@
 
                             {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('user.destroy', $user->id))) !!}
 
-                            {!! link_to_route('user.edit', 'Modifier', array($user->id), array('class' => 'btn btn-info')) !!}
-
-                            {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
-
                             {!! Form::close() !!}
 
                         @endif
