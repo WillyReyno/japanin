@@ -37,7 +37,12 @@ class PandoraUserController extends Controller {
 
         $users = User::all();
 
-        return view('pandora.users.index', compact('users'));
+        $facebook = User::where('provider', 'facebook')->count();
+        $twitter = User::where('provider', 'twitter')->count();
+        $google = User::where('provider', 'google')->count();
+        $japanin = User::where('provider', 'japanin')->count();
+
+        return view('pandora.users.index', compact('users', 'facebook', 'twitter', 'google', 'japanin'));
     }
 
     /**

@@ -13,6 +13,48 @@
                 {{Session::get('message')}}
             </div>
             @endif
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-blue"><i class="fa fa-facebook"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Facebook</span>
+                            <span class="info-box-number">{{ $facebook }}</span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div><!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="fa fa-twitter"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Twitter</span>
+                            <span class="info-box-number">{{ $twitter }}</span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div><!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="fa fa-google"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Google</span>
+                            <span class="info-box-number">{{ $google }}</span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div><!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-orange"><i class="ion ion-ios-people-outline"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Japanin</span>
+                            <span class="info-box-number">{{ $japanin }}</span>
+                        </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
                     <!-- Main row -->
             <div class="row">
                 <!-- Left col -->

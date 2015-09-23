@@ -149,10 +149,10 @@ class UserController extends Controller {
 
 			$user->delete();
 
-			return Redirect::route('user.index')->with('message', 'Membre supprimé');
+			return Redirect::back()->with('message', 'Membre supprimé');
 
 		} else {
-			return Redirect::route('user.index')->with('message', 'Vous n\'avez pas les permissions requises');
+			return Redirect::back()->with('message', 'Vous n\'avez pas les permissions requises');
 		}
 
 	}
