@@ -11,15 +11,6 @@
 |
 */
 
-use App\Models\UsersOldslug;
-use App\Models\Event;
-use App\Models\User;
-
-// Fourni un objet aux méthodes du controller plutôt qu'un id
-//Route::model('event', 'Event');
-Route::model('user', 'User');
-
-
 // Index
 Route::get('/', 'HomeController@index');
 
@@ -42,27 +33,13 @@ Route::get('/login/callback/{provider?}',[
     'as'   => 'auth.getSocialAuthCallback'
 ]);
 
-
-//
-//Route::bind('event', function($slug) {
-//        return $slug;
-//});
-
-Route::bind('user', function($slug) {
-   $userOldSlug = UsersOldslug::whereSlug($slug)->first();
-    if(is_null($userOldSlug)) {
-        return User::whereSlug($slug)->first();
-    } else {
-        return $slug;
-    }
-});
-
+Route::get('user/edit', ['as' => 'user.edit', 'uses' => 'UserController@edit'] );
+Route::get('user/destroy', ['as' => 'user.destroy', 'uses' => 'UserController@destroy'] );
 
 
 Route::resource('event', 'EventController');
 
-Route::resource('user', 'UserController');
-
+Route::resource('user', 'UserController', ['except' => ['edit', 'destroy']]);
 
 // Route qui permet de participer ou de quitter un évènement.
 Route::get('going/{event_id}', 'EventController@userGoing');
@@ -83,11 +60,13 @@ Route::get('fileentry/get/{filename}', [
     'uses' => 'FileEntryController@add']);*/
 
 /*
- * Admin
+ * Pandora
  */
 
-Route::group(['prefix' => 'admin'], function() {
-    // Todo Admin Routes
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::get('/', 'PandoraController@index');
+    Route::resource('/event', 'PandoraEventController');
+    Route::resource('/user', 'PandoraUserController');
 });
 
 
@@ -95,5 +74,6 @@ Route::group(['prefix' => 'admin'], function() {
 Route::get('{typeslug}/{slug?}/{id}', [
     'as' => 'showEvents',
     'uses' => 'EventController@show']);
+
 Route::get('event/{id}/edit', 'EventController@edit');
 

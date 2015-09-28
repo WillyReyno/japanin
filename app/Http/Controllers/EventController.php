@@ -7,15 +7,14 @@ use App\Models\User;
 use App\Models\Type;
 use App\Models\UserEvent;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Request as Rqst;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request as RequestFile;
+use \Auth;
+use \File;
+use \Storage;
+use \Request as Rqst;
+use \Input;
+use \Redirect;
 
 class EventController extends CommonController {
 
@@ -34,7 +33,6 @@ class EventController extends CommonController {
     {
         // Middleware définissant les pages où l'on ne peut accéder uniquement si l'on est connecté
         $this->middleware('auth', ['only' => ['create', 'edit', 'destroy']]);
-        // Middleware permettant d'effectuer les redirections 301
     }
 
 
@@ -89,10 +87,10 @@ class EventController extends CommonController {
      */
     public function show($typeslug, $slug = null, $id)
     {
-
-        $event = Event::find($id)->where('type_slug', $typeslug)->first();
+        $event = Event::find($id);
         $type = Type::findBySlug($typeslug);
         $author = User::find($event->user_id);
+
         if(Auth::check()) {
             $went = $this->userWent(Auth::user(), $event);
         } else {
@@ -121,22 +119,29 @@ class EventController extends CommonController {
      * @param $id
      * @return mixed
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
         $event = Event::find($id);
+
         if(Auth::user()->allowed('edit.event', $event)) {
-            // TODO check si ce n'est pas une bêtise de retirer le token ?
-            $input = array_except(Input::all(), ['_token', '_method', '_wysihtml5_mode']);
+
+            $input = $request->all();
 
             /* If a file is sent */
-            if (Rqst::file()) {
+            if ($request->file()) {
                 $input['poster'] = $this->imageUpload('poster', true);
             }
+
             $event->update($input);
 
-            return Redirect::route('showEvents', [$event->type_slug, $event->slug, $event->id])->with('message', 'Évènement modifié');
+            return Redirect::route('showEvents', [$event->type_slug, $event->slug, $event->id])
+                ->with('message', 'Évènement modifié');
+
         } else {
-            return Redirect::route('event.index')->with('message', 'Vous n\'avez pas les permissions requises');
+
+            return Redirect::route('event.index')
+                ->with('message', 'Vous n\'avez pas les permissions requises');
+
         }
     }
 
@@ -201,7 +206,7 @@ class EventController extends CommonController {
             $event->users()->attach($user->id);
         }
 
-        return Redirect::route('event.show', [$event->slug]);
+        return Redirect::route('showEvents', array('type_slug' => $event->type_slug, 'slug' => $event->slug, 'id' => $event->id));
     }
 
 }

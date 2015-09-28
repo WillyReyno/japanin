@@ -15,7 +15,7 @@
                         @else
                             <ul>
                                 @foreach( $users as $user )
-                                    <li><a href="{{ route('user.show', $user->slug) }}">{{ $user->username }}</a></li>
+                                    <li><a href="{{ route('user.show', $user->id) }}">{{ $user->username }}</a></li>
                                 @endforeach
                             </ul>
                         @endif

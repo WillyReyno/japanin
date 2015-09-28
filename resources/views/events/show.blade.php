@@ -54,7 +54,6 @@
                         @endif
 
                         <h3>Participants</h3>
-
                         <ul>
                             @foreach($event->users as $e_users)
                                 <li>{{ App\Models\User::find($e_users->pivot->user_id)->username }}</li>

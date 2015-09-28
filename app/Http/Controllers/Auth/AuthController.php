@@ -196,6 +196,7 @@ class AuthController extends Controller {
                 // Check if there is a user with the same email from a different provider
                 $userTest = User::where('email', '=', $mail)
                     ->where('provider', '<>', $provider)
+                    ->orWhere('provider', '=', null)
                     ->first();
 
                 // Then redirects with error
@@ -213,7 +214,7 @@ class AuthController extends Controller {
 
         } else {
             return Redirect::to('auth/login')
-                ->withErrors('Un problème est survenu si cela se reproduit, veuillez contacter un administrateur.');
+                ->withErrors('Un problème est survenu, si cela se reproduit, veuillez contacter un administrateur.');
         }
     }
 }
