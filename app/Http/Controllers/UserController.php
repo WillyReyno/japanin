@@ -3,12 +3,13 @@
 use App\Http\Requests;
 use App\Models\Event;
 use App\Models\UserEvent;
-use \Auth;
+use App\Models\UsersOldslug;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use \Input;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
-use \Redirect;
+use Illuminate\Support\Facades\Redirect;
 use Validator;
 
 class UserController extends Controller {
@@ -16,6 +17,7 @@ class UserController extends Controller {
 	public function __construct()
 	{
 		// Middleware permettant d'effectuer les redirections 301
+		$this->middleware('usersoldslug', ['only' => ['show', 'edit']]);
 		$this->middleware('auth', ['only' => ['edit', 'destroy']]);
 	}
 
@@ -56,9 +58,9 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show(User $user)
 	{
-		$user = User::find($id);
+
 		$events_created = Event::where('user_id', $user->id)->get();
 
 		//TODO Récupérer les events auxquels on a participé
@@ -72,9 +74,8 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit()
+	public function edit(User $user)
 	{
-		$user = User::find(Auth::user()->id);
 		return view('users.edit', compact('user'));
 	}
 
@@ -84,21 +85,18 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(User $user)
 	{
-		$user = User::find($id);
 		if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $user->id)) {
 			$input = Input::all();
 
-			if(!$user->provider) {
-				if (trim($input['password']) != '') {
-					$rules =  [
-						'username' => 'max:255',
-						'email' => 'email|max:255|unique:users,email,'.$user->id,
-						'password' => 'confirmed|min:6',
-						'birth' => 'date',
-					];
-				}
+			if (trim($input['password']) != '') {
+				$rules =  [
+					'username' => 'max:255',
+					'email' => 'email|max:255|unique:users,email,'.$user->id,
+					'password' => 'confirmed|min:6',
+					'birth' => 'date',
+				];
 			} else {
 				$rules =  [
 					'username' => 'max:255',
@@ -107,6 +105,7 @@ class UserController extends Controller {
 				];
 			}
 
+
 			$validator = Validator::make($input, $rules);
 
 			if ($validator->fails()) {
@@ -114,18 +113,28 @@ class UserController extends Controller {
 				return Redirect::route('user.edit', $user->slug)->withInput($input)->withErrors($validator->getMessageBag());
 
 			} else {
+				/* Saving old slug for 301 redirections */
+				if ($input['username'] != $user->username) {
+
+					$oldslug = UsersOldslug::create([
+						'user_id' => $user->id,
+						'slug' => $user->slug
+					]);
+
+					$oldslug->save();
+
+				}
 
 				$user->username = $input['username'];
 				$user->email = $input['email'];
-				if(!$user->provider && !empty($input['password'])){
-					$user->password = bcrypt($input['password']);
-				}
+				$user->password = bcrypt($input['password']);
 				$user->birth = $input['birth'];
 				$user->sex = $input['sex'];
+				//$user->avatar = $input['avatar'];
 
 				$user->save();
 
-				return Redirect::route('user.show', [$user->id])->with('message', 'Utilisateur modifié');
+				return Redirect::route('user.show', [$user->slug])->with('message', 'Utilisateur modifié');
 			}
 
 
@@ -142,17 +151,16 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy()
+	public function destroy(User $user)
 	{
-		$user = User::find(Auth::user()->id);
 		if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $user->id)) {
 
 			$user->delete();
 
-			return Redirect::back()->with('message', 'Membre supprimé');
+			return Redirect::route('user.index')->with('message', 'Membre supprimé');
 
 		} else {
-			return Redirect::back()->with('message', 'Vous n\'avez pas les permissions requises');
+			return Redirect::route('user.index')->with('message', 'Vous n\'avez pas les permissions requises');
 		}
 
 	}

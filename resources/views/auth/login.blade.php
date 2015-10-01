@@ -1,81 +1,64 @@
 @extends('app')
 
 @section('content')
-
-	<div class="container">
-		<div class="col-md-8 col-md-offset-2">
-			@if (count($errors) > 0)
-				<div class="alert alert-danger">
-					<strong>Whoops!</strong> There were some problems with your input.<br><br>
-
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				</div>
-			@endif
-		</div>
-
-		<div class="col-md-4 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Connexion</div>
-				<div class="panel-body">
-
-
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Pseudo</label>
-							<div class="col-md-6">
-								<input type="text" class="form-control" name="username" value="{{ old('username') }}">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">Login</div>
+					<div class="panel-body">
+						@if (count($errors) > 0)
+							<div class="alert alert-danger">
+								<strong>Whoops!</strong> There were some problems with your input.<br><br>
+								<ul>
+									@foreach ($errors->all() as $error)
+										<li>{{ $error }}</li>
+									@endforeach
+								</ul>
 							</div>
-						</div>
+						@endif
+						<a class="btn btn-primary" href="/login/facebook">Se connecter avec Facebook</a><br>
+						<a class="btn btn-danger" href="/login/google">Se connecter avec Google</a><br>
+						<a class="btn btn-info" href="/login/twitter">Se connecter avec Twitter</a><br>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Mot de passe</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
+						<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
+							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember"> Se souvenir de moi
-									</label>
+							<div class="form-group">
+								<label class="col-md-4 control-label">Username</label>
+								<div class="col-md-6">
+									<input type="text" class="form-control" name="username" value="{{ old('username') }}">
 								</div>
 							</div>
-						</div>
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">Connexion</button>
-
-								<a class="btn btn-link" href="{{ url('/password/email') }}">Mot de passe oublié ?</a>
+							<div class="form-group">
+								<label class="col-md-4 control-label">Password</label>
+								<div class="col-md-6">
+									<input type="password" class="form-control" name="password">
+								</div>
 							</div>
-						</div>
-					</form>
+
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-4">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="remember"> Remember Me
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-4">
+									<button type="submit" class="btn btn-primary">Login</button>
+
+									<a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="col-md-4">
-			<div class="panel panel-default">
-				<div class="panel-heading">Connexion par les réseaux sociaux</div>
-				<div class="panel-body">
-
-					<a class="btn btn-primary btn-block" href="/login/facebook">Se connecter avec Facebook</a><br>
-					<a class="btn btn-danger btn-block" href="/login/google">Se connecter avec Google</a><br>
-					<a class="btn btn-info btn-block" href="/login/twitter">Se connecter avec Twitter</a><br>
-
-
-				</div>
-			</div>
-		</div>
-
 	</div>
-
 @endsection

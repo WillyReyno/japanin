@@ -11,38 +11,47 @@
 |
 */
 
+use App\Models\Oldslug;
+use App\Models\UsersOldslug;
+use App\Models\Event;
+use App\Models\User;
+
+// Fourni un objet aux méthodes du controller plutôt qu'un id
+Route::model('event', 'Event');
+Route::model('user', 'User');
+
+
 // Index
 Route::get('/', 'HomeController@index');
 
-/* Authentification  */
-Route::controllers([
-    'auth' => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-]);
 
 
-/* Facebook, Twitter and Google Route  */
-Route::get('/login/{provider?}',[
-    'uses' => 'Auth\AuthController@getSocialAuth',
-    'as'   => 'auth.getSocialAuth'
-]);
+Route::bind('event', function($slug) {
+    $oldSlug = Oldslug::whereSlug($slug)->first();
+    if (is_null($oldSlug)) {
+        return Event::whereSlug($slug)->first();
+    } else {
+        return $slug;
+    }
+});
 
-/* Callback route for Facebook, Twitter and Google  */
-Route::get('/login/callback/{provider?}',[
-    'uses' => 'Auth\AuthController@getSocialAuthCallback',
-    'as'   => 'auth.getSocialAuthCallback'
-]);
+Route::bind('user', function($slug) {
+   $userOldSlug = UsersOldslug::whereSlug($slug)->first();
+    if(is_null($userOldSlug)) {
+        return User::whereSlug($slug)->first();
+    } else {
+        return $slug;
+    }
+});
 
-Route::get('user/edit', ['as' => 'user.edit', 'uses' => 'UserController@edit'] );
-Route::get('user/destroy', ['as' => 'user.destroy', 'uses' => 'UserController@destroy'] );
+// Route qui permet de participer ou de quitter un évènement.
+Route::get('going/{event_id}', 'EventController@userGoing');
 
 
 Route::resource('event', 'EventController');
 
-Route::resource('user', 'UserController', ['except' => ['edit', 'destroy']]);
+Route::resource('user', 'UserController');
 
-// Route qui permet de participer ou de quitter un évènement.
-Route::get('going/{event_id}', 'EventController@userGoing');
 
 
 /*
@@ -60,20 +69,30 @@ Route::get('fileentry/get/{filename}', [
     'uses' => 'FileEntryController@add']);*/
 
 /*
- * Pandora
+ * Admin
  */
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
-    Route::get('/', 'AdminController@index');
-    Route::resource('/event', 'EventController');
-    Route::resource('/user', 'UserController');
+Route::group(['prefix' => 'admin'], function() {
+    // Todo Admin Routes
 });
 
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
 
-/* Events  */
-Route::get('{typeslug}/{slug?}/{id}', [
-    'as' => 'showEvents',
-    'uses' => 'EventController@show']);
+//Social Login
 
-Route::get('event/{id}/edit', 'EventController@edit');
+// Route to login user via Facebook, Google or Twitter
+Route::get('/login/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuth',
+    'as'   => 'auth.getSocialAuth'
+]);
+
+// Callback route for Facebook, Google and Twitter
+Route::get('/login/callback/{provider?}',[
+    'uses' => 'Auth\AuthController@getSocialAuthCallback',
+    'as'   => 'auth.getSocialAuthCallback'
+]);
+
 
