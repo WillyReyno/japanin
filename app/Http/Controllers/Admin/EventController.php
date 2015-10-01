@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -14,9 +14,10 @@ use \File;
 use \Storage;
 use \Input;
 use \Redirect;
+use App\Http\Controllers\CommonController;
 
 
-class PandoraEventController extends CommonController {
+class EventController extends CommonController {
 
     protected $rules = [
         'name' => ['required'],
@@ -50,7 +51,7 @@ class PandoraEventController extends CommonController {
         $events = paginate($eventsperpage);*/
         $events = Event::all();
 
-        return view('pandora.events.index', compact('events'));
+        return view('admin.events.index', compact('events'));
     }
 
     /**
@@ -63,7 +64,7 @@ class PandoraEventController extends CommonController {
     {
         $event = Event::findOrFail($id);
         $types = Type::lists('name', 'slug');
-        return view('pandora.events.edit', compact('event', 'types'));
+        return view('admin.events.edit', compact('event', 'types'));
     }
 
     /**

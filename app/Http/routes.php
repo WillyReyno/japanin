@@ -63,10 +63,10 @@ Route::get('fileentry/get/{filename}', [
  * Pandora
  */
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-    Route::get('/', 'PandoraController@index');
-    Route::resource('/event', 'PandoraEventController');
-    Route::resource('/user', 'PandoraUserController');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function() {
+    Route::get('/', 'AdminController@index');
+    Route::resource('/event', 'EventController');
+    Route::resource('/user', 'UserController');
 });
 
 

@@ -1,11 +1,12 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Models\Event;
 use App\Models\User;
 use \GitHub;
+use App\Http\Controllers\Controller;
 
 
-class PandoraController extends Controller {
+class AdminController extends Controller {
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +46,7 @@ class PandoraController extends Controller {
         //$json_issues = json_encode($issues);
 
         $vars = ['eventsCount', 'usersCount', 'latestEvents', 'latestUsers', 'issues'];
-        return view('pandora.index', compact($vars));
+        return view('admin.index', compact($vars));
     }
 
 }

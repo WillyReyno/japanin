@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Models\Event;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use \Redirect;
 use Validator;
 
-class PandoraUserController extends Controller {
+class UserController extends Controller {
 
     public function __construct()
     {
@@ -42,7 +42,7 @@ class PandoraUserController extends Controller {
         $google = User::where('provider', 'google')->count();
         $japanin = User::where('provider', 'japanin')->count();
 
-        return view('pandora.users.index', compact('users', 'facebook', 'twitter', 'google', 'japanin'));
+        return view('admin.users.index', compact('users', 'facebook', 'twitter', 'google', 'japanin'));
     }
 
     /**
@@ -54,7 +54,7 @@ class PandoraUserController extends Controller {
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('pandora.users.edit', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
