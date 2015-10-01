@@ -2,7 +2,6 @@
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use \Redirect;
 
 class Admin {
 
@@ -21,7 +20,7 @@ class Admin {
             return $next($request);
         } else {
             // Todo Customiser la réponse et / ou faire une redirection
-            return Redirect::back();
+            return response('Unauthorized.', 401);
         }
 	}
 

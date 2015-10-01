@@ -7,9 +7,10 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('type_slug', 'Type', array('class' => 'col-md-4 control-label')) !!}
+    {!! Form::label('type_id', 'Type', array('class' => 'col-md-4 control-label')) !!}
     <div class="col-md-6">
-        {!! Form::select('type_slug', $types, Input::old('type_slug'), array('class' => 'form-control')) !!}
+        <!-- TODO : Comment faire pour transférer $types ? -->
+        {!! Form::select('type_id', $types, Input::old('type_id'), array('class' => 'form-control')) !!}
     </div>
 </div>
 

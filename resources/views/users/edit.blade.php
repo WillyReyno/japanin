@@ -20,7 +20,7 @@
 
 
                         @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id == $user->id))
-                            {!! Form::model($user, ['method' => 'PATCH', 'files' => true, 'route' => ['user.update', $user->id], 'class' => 'form-horizontal']) !!}
+                            {!! Form::model($user, ['method' => 'PATCH', 'files' => true, 'route' => ['user.update', $user->slug], 'class' => 'form-horizontal']) !!}
                             @include('users/partials/_form', ['submit_text' => 'Sauvegarder'])
                             {!! Form::close() !!}
                         @elseif(!Auth::check())

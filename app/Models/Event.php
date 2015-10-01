@@ -13,7 +13,7 @@ class Event extends Model implements SluggableInterface {
     protected $table = 'events';
 
     protected $fillable = [
-        'name', 'type_slug', 'address', 'latitude', 'longitude',
+        'name', 'type_id', 'address', 'latitude', 'longitude',
         'start_date', 'end_date', 'description', 'user_id', 'poster', 'private'];
 
     protected $hidden = [];

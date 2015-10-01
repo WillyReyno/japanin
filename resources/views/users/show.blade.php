@@ -10,7 +10,6 @@
 
                     <div class="panel-body">
                         <h2>{{ $user->username }}</h2>
-
                         @if($user->avatar)
                             <img src="{{ $user->avatar }}">
                         @elseif(Gravatar::get($user->email))
@@ -54,7 +53,11 @@
 
                         @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $user->id))
 
-                            {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('user.destroy', $user->id))) !!}
+                            {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('user.destroy', $user->slug))) !!}
+
+                            {!! link_to_route('user.edit', 'Modifier', array($user->slug), array('class' => 'btn btn-info')) !!}
+
+                            {!! Form::submit('Supprimer', array('class' => 'btn btn-danger')) !!}
 
                             {!! Form::close() !!}
 
