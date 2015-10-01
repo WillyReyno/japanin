@@ -343,17 +343,17 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
-                <li class="{{ set_active(['admin']) }} treeview">
+                <li class="{{ Active::pattern('admin') }} treeview">
                     <a href="{{ url('admin') }}">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ set_active(['admin/event']) }} treeview">
+                <li class="{{ Active::pattern('admin/event') }} treeview">
                     <a href="{{ route('admin.event.index') }}">
                         <i class="fa fa-calendar"></i> <span>Évènements</span>
                     </a>
                 </li>
-                <li class="{{ set_active(['admin/user']) }} treeview">
+                <li class="{{ Active::pattern('admin/user') }} treeview">
                     <a href="{{ route('admin.user.index') }}">
                         <i class="fa fa-user"></i> <span>Utilisateurs</span>
                     </a>

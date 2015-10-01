@@ -144,6 +144,7 @@ return [
 		'Creativeorange\Gravatar\GravatarServiceProvider',
 		'Laravel\Socialite\SocialiteServiceProvider',
 		'GrahamCampbell\GitHub\GitHubServiceProvider',
+		'HieuLe\Active\ActiveServiceProvider',
 
 
 		/*
@@ -209,6 +210,7 @@ return [
 		'Gravatar' => 'Creativeorange\Gravatar\Facades\Gravatar',
 		'Socialite' => 'Laravel\Socialite\Facades\Socialite',
 		'GitHub' => 'GrahamCampbell\GitHub\Facades\GitHub',
+		'Active' => 'HieuLe\Active\Facades\Active',
 
 
 	],
