@@ -10,7 +10,7 @@
                     <div class="panel-body">
                         <ul>
                             <li><strong>Nom :</strong> {{$event->name}}</li>
-                            <li><strong>Type :</strong> {{$event->type_id}}</li> <!-- TODO Dynamiser -->
+                            <li><strong>Type :</strong> {{$type->name}}</li> <!-- TODO Dynamiser -->
                             <li><strong>Adresse :</strong> {{$event->address}}</li>
                             <li><strong>Latitude :</strong> {{$event->latitude}}</li>
                             <li><strong>Longitude :</strong> {{$event->longitude}}</li>
@@ -30,10 +30,10 @@
                         @endallowed
 
                         @if(Auth::check() && (Auth::user()->isAdmin() OR Auth::user()->id === $event->user_id))
-                            {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('event.destroy', $event->slug))) !!}
+                            {!! Form::open(array('class' => 'form-inline col-md-12', 'method' => 'DELETE', 'route' => array('event.destroy', $event->id))) !!}
 
                             @allowed('edit.event', $event)
-                            {!! link_to_route('event.edit', 'Modifier', array($event->slug), array('class' => 'btn btn-info')) !!}
+                            {!! link_to_route('event.edit', 'Modifier', array($event->id), array('class' => 'btn btn-info')) !!}
                             @endallowed
 
                             @allowed('delete.event', $event)
@@ -54,7 +54,6 @@
                         @endif
 
                         <h3>Participants</h3>
-
                         <ul>
                             @foreach($event->users as $e_users)
                                 <li>{{ App\Models\User::find($e_users->pivot->user_id)->username }}</li>

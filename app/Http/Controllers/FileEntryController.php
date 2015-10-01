@@ -2,10 +2,9 @@
 
 use App\Models\Fileentry;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
-
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use \Request;
+use \File;
+use \Storage;
 use Illuminate\Http\Response;
 
 class FileEntryController extends Controller {

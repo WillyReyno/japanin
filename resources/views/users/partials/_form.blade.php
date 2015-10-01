@@ -13,19 +13,21 @@
     </div>
 </div>
 
-<div class="form-group">
-    {!! Form::label('password', 'Mot de passe', array('class' => 'col-md-4 control-label')) !!}
-    <div class="col-md-6">
-        {!! Form::password('password', array('class' => 'form-control')) !!}
+@if(!$user->provider)
+    <div class="form-group">
+        {!! Form::label('password', 'Mot de passe', array('class' => 'col-md-4 control-label')) !!}
+        <div class="col-md-6">
+            {!! Form::password('password', array('class' => 'form-control')) !!}
+        </div>
     </div>
-</div>
 
-<div class="form-group">
-    {!! Form::label('password_confirmation', 'Confirmation Mot de passe', array('class' => 'col-md-4 control-label')) !!}
-    <div class="col-md-6">
-        {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
+    <div class="form-group">
+        {!! Form::label('password_confirmation', 'Confirmation Mot de passe', array('class' => 'col-md-4 control-label')) !!}
+        <div class="col-md-6">
+            {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
+        </div>
     </div>
-</div>
+@endif
 
 <div class="form-group" id="sandbox-container">
     {!! Form::label('birth', 'Date de naissance', array('class' => 'col-md-4 control-label')) !!}
@@ -38,7 +40,7 @@
     <label class="col-md-4 control-label">Sexe</label>
 
     <div class="col-md-2">
-        {!! Form::select('sex', ['female' => 'Femme', 'male' => 'Homme', 'other' => 'Autre'], Input::old('type_id'), ['class' => 'form-control']) !!}
+        {!! Form::select('sex', [null => 'Non renseigné', 'female' => 'Femme', 'male' => 'Homme', 'other' => 'Autre'], Input::old('type_id'), ['class' => 'form-control']) !!}
     </div>
 </div>
 

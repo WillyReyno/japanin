@@ -52,7 +52,7 @@ class AuthController extends Controller {
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|max:255', //TODO Unique ou non ? Checker dans les oldslugs ?
+            'username' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
             'birth' => 'date',
@@ -103,7 +103,6 @@ class AuthController extends Controller {
      */
     public function postLogin(Request $request)
     {
-        dd(URL::previous());
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -197,6 +196,7 @@ class AuthController extends Controller {
                 // Check if there is a user with the same email from a different provider
                 $userTest = User::where('email', '=', $mail)
                     ->where('provider', '<>', $provider)
+                    ->orWhere('provider', '=', null)
                     ->first();
 
                 // Then redirects with error
@@ -214,7 +214,7 @@ class AuthController extends Controller {
 
         } else {
             return Redirect::to('auth/login')
-                ->withErrors('Un problème est survenu si cela se reproduit, veuillez contacter un administrateur.');
+                ->withErrors('Un problème est survenu, si cela se reproduit, veuillez contacter un administrateur.');
         }
     }
 }
